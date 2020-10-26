@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema;
 
-const Engineer = new Schema({
+const EngineerSchema = new Schema({
     engineer:{
         type: Schema.Types.ObjectId,
         ref: "User",
@@ -17,6 +17,12 @@ const Engineer = new Schema({
         type: Number,
         required: true,
         default: 0
+    },
+    availability:{
+        type:String,
+        required:true
     }
 
 })
+
+module.exports = mongoose.model("Engineer", EngineerSchema)

@@ -33,6 +33,10 @@ const JobSchema = new mongoose.Schema({
     },
     rate:{
         type:Number,
+    },
+    engineer:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Engineer"
     }
 })
 
