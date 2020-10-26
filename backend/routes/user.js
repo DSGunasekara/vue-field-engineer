@@ -17,7 +17,7 @@ router.get("/", async (req, res)=>{
 router.get("/:id", async(req, res)=>{
     try {
         const user = await User.findOne({_id:req.params.id});
-        if(!user) return res.status(404).send("User not found");
+        if(!user) return res.status(404).send("User does not exits");
         return res.status(200).send(user);
     }catch (error){
         console.log(error)
@@ -32,13 +32,10 @@ router.post("/", async (req, res)=>{
         const checkUser = await User.findOne({email});
         if(checkUser) return res.status(409).send("User already exits");
 
-        const user = new User ({
-            name, email, password, passportNo, contactNo, state, country, role
-        })
+        const user = new User ({...req.body})
 
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(password, salt);
-        console.log(user)
 
         await user.save((error, savedUser)=>{
             if(error) return res.status(400).send(error);
@@ -46,7 +43,6 @@ router.post("/", async (req, res)=>{
         });
 
     }catch (error){
-        console.log(error)
         return res.status(500).send(error);
     }
 });
@@ -55,12 +51,11 @@ router.post("/", async (req, res)=>{
 router.patch("/:id", async (req, res)=>{
     try {
         const checkUser = await User.findOne({_id : req.params.id});
-        if(!checkUser) return res.status(404).send("User not found");
+        if(!checkUser) return res.status(404).send("User does not exits");
 
-        const updatedUser = await User.updateOne({_id:req.params.id}, req.body);
+        await User.updateOne({_id:req.params.id}, req.body);
         return res.status(200).send("User updated");
     }catch (error){
-        console.log(error)
         return res.status(500).send(error)
     }
 });
@@ -69,13 +64,12 @@ router.patch("/:id", async (req, res)=>{
 router.delete("/:id", async (req, res)=>{
     try {
         const user = await User.findOne({_id: req.params.id});
-        if(!user) return res.status(404).send("User not found")
-        await user.remove((error, removedUser)=>{
+        if(!user) return res.status(404).send("User does not exits")
+        await user.remove((error, _)=>{
             if(error) return res.status(400).send(error);
             return res.status(200).send("User deleted")
         })
     }catch (error){
-        console.log(error)
         return res.status(500).send(error)
     }
 })
