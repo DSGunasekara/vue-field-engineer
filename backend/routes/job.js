@@ -5,8 +5,13 @@ const Engineer = require("../models/Engineer")
 //get all jobs
 router.get("/", async (req, res)=>{
     try{
-        const jobs = await Job.find({})
-        return res.status(200).send(jobs)
+        await Job.find({})
+            .populate("assignedEngineers")
+            .exec()
+            .then((jobs, error)=>{
+                if(error) return res.status(400).send(error)
+                return res.status(200).send(jobs)
+            })
     }catch (error){
         return res.status(500).send(error)
     }
@@ -15,9 +20,13 @@ router.get("/", async (req, res)=>{
 //get one job
 router.get("/:id", async (req, res)=>{
     try {
-        const job = await Job.findOne({_id: req.params.id})
-        if(!job) return res.status(404).send("Job does not exits")
-        return res.status(200).send(job)
+        await Job.findOne({_id: req.params.id})
+            .populate("assignedEngineers")
+            .exec()
+            .then((job, error)=>{
+                if(error) return res.status(400).send(error)
+                return res.status(200).send(job)
+            })
     }catch (error){
         return res.status(500).send(error)
     }
@@ -30,7 +39,7 @@ router.post("/", async (req, res)=>{
         if(job.engineer){
             const engineer = await Engineer.findOne({_id: job.engineer})
             if(!engineer) return res.status(404).send("Engineer does not exits")
-            engineer.jobList.push(job)
+            //TODO: add jobs to the engineer job list history
         }
         await job.save((error, _)=>{
             if(error) return res.status(400).send(error)
@@ -47,19 +56,9 @@ router.patch("/:id", async (req, res)=>{
     try {
         const job = await Job.findOne({_id: req.params.id})
         if(!job) return res.status(404).send("Job does not exits")
-
-        const updatedJob = await Job.updateOne({_id: req.params.id}, req.body)
-
-        const { engineer } = req.body
-
-        const checkEngineer = await Engineer.findOne({_id: engineer})
-        if(!checkEngineer) return res.status(404).send("Engineer does not exits")
-
-        checkEngineer.jobList.push(req.params.id)
-        await checkEngineer.save()
-
+        await Job.updateOne({_id: req.params.id}, req.body)
+        //TODO: update engineer job list history
         return res.status(200).send("Job updated")
-
     }catch (error){
         return res.status(500).send(error)
     }

@@ -34,10 +34,12 @@ const JobSchema = new mongoose.Schema({
     rate:{
         type:Number,
     },
-    engineer:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"Engineer"
-    }
+    assignedEngineers:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Engineer"
+        }
+    ]
 })
 
 module.exports = mongoose.model('Job', JobSchema)

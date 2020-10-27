@@ -7,12 +7,6 @@ const EngineerSchema = new Schema({
         ref: "User",
         required:true
     },
-    jobList:[
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Job"
-        }
-    ],
     rate:{
         type: Number,
         required: true,
