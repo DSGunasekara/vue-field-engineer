@@ -1,4 +1,4 @@
-<template>
+<template class="app">
   <v-app>
     <Navbar />
     <v-main class="mx-4 mb-4">
@@ -24,7 +24,7 @@ export default {
 </script>
 
 <style scoped>
-.v-app {
-  background: #000;
+.app {
+  background-color: #3cd1c2;
 }
 </style>
