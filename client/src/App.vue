@@ -1,20 +1,17 @@
 <template>
   <v-app>
-    <Login/>
+    <Navbar />
   </v-app>
 </template>
 
 <script>
-
-import Login from "./components/Login";
+import Navbar from "./components/Layouts/Navbar";
 
 export default {
-
-  
-  name: 'App',
+  name: "App",
 
   components: {
-    Login
+    Navbar,
   },
 
   data: () => ({
