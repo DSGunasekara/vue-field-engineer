@@ -1,7 +1,8 @@
 <template>
   <nav>
+
     <v-toolbar flat>
-      <v-app-bar-nav-icon class="grey--text"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon class="grey--text" @click.stop="drawer =! drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title class="grey--text">
         404
@@ -15,6 +16,22 @@
         <v-icon>mdi-logout</v-icon>
       </v-btn>
     </v-toolbar>
+
+    <v-navigation-drawer v-model="drawer" absolute temporary dark class="primary">
+      <v-list class="my-2">
+        <v-list-item v-for="link in links" :key="link.text" router :to="link.route">
+          <v-list-item-icon>
+            <v-icon>{{ link.icon }}</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>
+            <v-list-item-content>
+              {{ link.text }}
+            </v-list-item-content>
+          </v-list-item-title>
+        </v-list-item>
+      </v-list>
+
+    </v-navigation-drawer>
   </nav>
 </template>
 
@@ -22,10 +39,17 @@
 export default {
   name: "Navbar",
   data() {
-    return {};
+    return {
+      drawer: null,
+      links:[
+        {icon: 'mdi-view-dashboard', text: 'Dashboard', route:'/'},
+        {icon: 'mdi-folder', text: 'Jobs', route:'/jobs'},
+        {icon: 'mdi-account-group', text: 'Engineers', route:'/engineers'},
+      ]
+    };
   },
 };
 </script>
 
-<style>
+<style scoped>
 </style>
