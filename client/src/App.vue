@@ -1,5 +1,5 @@
-<template>
-  <v-app>
+<template class="app">
+  <v-app >
     <Navbar/>
     <v-main class="mx-4 mb-4">
       <router-view></router-view>
@@ -22,3 +22,9 @@ export default {
   }),
 };
 </script>
+
+<style scoped>
+  .app{
+    background-color: #3cd1c2;
+  }
+</style>
