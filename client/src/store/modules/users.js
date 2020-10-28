@@ -8,7 +8,6 @@ const getters = {};
 
 const actions = {
   async registerUser({ commit }, regUser) {
-    console.log(regUser);
     const response = await axios.post("http://localhost:5000/api/user", {
       ...regUser,
     });

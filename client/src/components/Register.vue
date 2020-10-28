@@ -71,6 +71,17 @@
         </v-flex>
       </v-layout>
     </v-form>
+    <v-snackbar top v-model="snackbar">
+      {{ text }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="pink"
+          text
+          v-bind="attrs"
+          @click="snackbar = false">Close</v-btn>
+      </template>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -97,10 +108,13 @@ export default {
         required: value => !!value || 'Required.',
         min: v => v.length >= 8 || 'Min 8 characters',
       },
+      snackbar: false,
+      text: 'user updated'
     }),
     methods:{
       ...mapActions(['registerUser']),
       submit(){
+        this.snackbar = true
         const user = {
           name: this.name,
           email:this.email,
