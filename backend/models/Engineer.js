@@ -13,7 +13,7 @@ const EngineerSchema = new Schema({
     default: 0,
   },
   availability: {
-    type: String,
+    type: Boolean,
     required: true,
     default: false,
   },

@@ -7,14 +7,20 @@ const state = {
 const getters = {};
 
 const actions = {
-  async registerUser(user) {
-    await axios.post("http://localhost:5000/api/user", {
-      ...user,
+  async registerUser({ commit }, regUser) {
+    console.log(regUser);
+    const response = await axios.post("http://localhost:5000/api/user", {
+      ...regUser,
     });
+    commit("regUser", response.data);
   },
 };
 
-const mutations = {};
+const mutations = {
+  regUser(user) {
+    state.users.shift(user);
+  },
+};
 
 export default {
   state,

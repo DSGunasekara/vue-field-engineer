@@ -62,7 +62,7 @@
       </v-layout>
       <v-layout row justify-space-around>
         <v-flex md5>
-          <v-select v-model="role" :menu-props="{ offsetY: true }" :items="roles" label="Roles"></v-select>
+          <v-select v-model="role" :menu-props="{ offsetY: true }" :items="roles" label="Roles" :rules="[rules.required]"></v-select>
         </v-flex>
       </v-layout>
       <v-layout row justify-center>
@@ -111,7 +111,7 @@ export default {
           country: this.country,
           role: this.role
         }
-        // console.log(user);
+        console.log(user.name);
         this.registerUser(user)
       }
     },
