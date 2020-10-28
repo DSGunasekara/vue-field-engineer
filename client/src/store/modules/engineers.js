@@ -25,34 +25,3 @@ export default {
   actions,
   mutations,
 };
-
-// {
-//     name: "Dilain Gunasekara",
-//     location: "Galle, Sri Lanka",
-//     rating: "4.1",
-//     availability: "available",
-//   },
-//   {
-//     name: "John Cena",
-//     location: "Colombo, Sri Lanka",
-//     rating: "4.1",
-//     availability: "unavailable",
-//   },
-//   {
-//     name: "Peter Parker",
-//     location: "London, Sri Lanka",
-//     rating: "3.1",
-//     availability: "available",
-//   },
-//   {
-//     name: "Tony Start",
-//     location: "Kandy, Sri Lanka",
-//     rating: "4.8",
-//     availability: "unavailable",
-//   },
-//   {
-//     name: "The Undertaker",
-//     location: "DC, USA",
-//     rating: "4.3",
-//     availability: "available",
-//   },

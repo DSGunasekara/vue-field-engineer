@@ -4,31 +4,70 @@
     <v-form>
       <v-layout row justify-space-around>
         <v-flex md5>
-          <v-text-field label="Name"></v-text-field>
+          <v-text-field v-model="name" label="Name" ></v-text-field>
         </v-flex>
         <v-flex md5>
-          <v-text-field label="Email"></v-text-field>
-        </v-flex>
-      </v-layout>
-      <v-layout row justify-space-around>
-        <v-flex md5>
-          <v-text-field label="Passport No"></v-text-field>
-        </v-flex>
-        <v-flex md5>
-          <v-text-field label="Contact No"></v-text-field>
+          <v-text-field v-model="email" label="Email" ></v-text-field>
         </v-flex>
       </v-layout>
       <v-layout row justify-space-around>
         <v-flex md5>
-          <v-text-field label="State"></v-text-field>
+          <v-text-field v-model="passportNo" label="Passport No"></v-text-field>
         </v-flex>
         <v-flex md5>
-          <v-text-field label="Country"></v-text-field>
+          <v-text-field v-model="contactNo" label="Contact No"></v-text-field>
+        </v-flex>
+      </v-layout>
+      <v-layout row justify-space-around>
+        <v-flex md5>
+          <v-text-field v-model="state" label="State"></v-text-field>
+        </v-flex>
+        <v-flex md5>
+          <v-text-field v-model="country" label="Country"></v-text-field>
+        </v-flex>
+      </v-layout>
+      <v-layout row justify-space-around>
+        <v-flex md5>
+          
+          <v-text-field
+            v-model="password"
+            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="[rules.required, rules.min]"
+            :type="show1 ? 'text' : 'password'"
+            name="input-10-1"
+            label="Password"
+            hint="At least 8 characters"
+            counter
+            @click:append="show1 = !show1"
+          ></v-text-field>
+
+          
+        </v-flex>
+        <v-flex md5>
+          
+          <v-text-field
+            v-model="repassword"
+            :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="[rules.required, rules.min, passwordConfirmationRule]"
+            :type="show2 ? 'text' : 'password'"
+            name="input-10-1"
+            label="Confirm Password"
+            hint="At least 8 characters"
+            counter
+            @click:append="show2 = !show2"
+          ></v-text-field>
+
+
+        </v-flex>
+      </v-layout>
+      <v-layout row justify-space-around>
+        <v-flex md5>
+          <v-select v-model="role" :menu-props="{ offsetY: true }" :items="roles" label="Roles"></v-select>
         </v-flex>
       </v-layout>
       <v-layout row justify-center>
         <v-flex md2>
-          <v-btn text class="primary">Register</v-btn>
+          <v-btn text class="primary" @click="submit">Register</v-btn>
         </v-flex>
       </v-layout>
     </v-form>
@@ -36,7 +75,52 @@
 </template>
 
 <script>
-export default {};
+
+import { mapActions } from 'vuex';
+
+export default {
+  name: "Register",
+   data: () => ({
+      roles: ['Engineer', 'Admin'],
+      name:'',
+      email:'',
+      passportNo:'',
+      contactNo:'',
+      state:'',
+      country:'',
+      role:'',
+      password: '',
+      repassword: '',
+      show1: false,
+      show2: false,
+      rules: {
+        required: value => !!value || 'Required.',
+        min: v => v.length >= 8 || 'Min 8 characters',
+      },
+    }),
+    methods:{
+      ...mapActions(['registerUser']),
+      submit(){
+        const user = {
+          name: this.name,
+          email:this.email,
+          password: this.password,
+          passportNo: this.passportNo,
+          contactNo: this.contactNo,
+          state: this.state,
+          country: this.country,
+          role: this.role
+        }
+        // console.log(user);
+        this.registerUser(user)
+      }
+    },
+    computed: {
+    passwordConfirmationRule() {
+      return () => (this.password === this.repassword) || 'Password must match'
+    }
+}
+};
 </script>
 
 <style>

@@ -18,11 +18,11 @@
           </v-responsive>
           <v-card-text>
             <div class="subheading">
-              {{ engineer.engineer.name }}
+              {{ engineer.user.name }}
             </div>
             <div class="grey--text">
               <v-icon small left>mdi-map-marker</v-icon>
-              {{ `${engineer.engineer.state}, ${engineer.engineer.country}` }}
+              {{ `${engineer.user.state}, ${engineer.user.country}` }}
             </div>
             <div class="grey--text">
               <v-icon small left>mdi-star</v-icon>
