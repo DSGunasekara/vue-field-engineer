@@ -1,29 +1,31 @@
 <template>
   <v-container>
     <h1 class="subheading grey--text">Register</h1>
-    <v-form>
+    <v-form ref="form"
+    v-model="valid"
+    lazy-validation>
       <v-layout row justify-center>
         <v-flex md2 class="ma-5">
-          <v-text-field v-model="name" label="Name"></v-text-field>
+          <v-text-field v-model="name" label="Name" :rules="[rules.required]"></v-text-field>
         </v-flex>
         <v-flex md2 class="ma-5">
-          <v-text-field v-model="email" label="Email"></v-text-field>
+          <v-text-field v-model="email" label="Email" :rules="[rules.required]"></v-text-field>
         </v-flex>
       </v-layout>
       <v-layout row justify-center>
         <v-flex md2 class="ma-5">
-          <v-text-field v-model="passportNo" label="Passport No"></v-text-field>
+          <v-text-field v-model="passportNo" label="Passport No" :rules="[rules.required]"></v-text-field>
         </v-flex>
         <v-flex md2 class="ma-5">
-          <v-text-field v-model="contactNo" label="Contact No"></v-text-field>
+          <v-text-field v-model="contactNo" label="Contact No" :rules="[rules.required]"></v-text-field>
         </v-flex>
       </v-layout>
       <v-layout row justify-center>
         <v-flex md2 class="ma-5">
-          <v-text-field v-model="state" label="State"></v-text-field>
+          <v-text-field v-model="state" label="State" :rules="[rules.required]"></v-text-field>
         </v-flex>
         <v-flex md2 class="ma-5">
-          <v-text-field v-model="country" label="Country"></v-text-field>
+          <v-text-field v-model="country" label="Country" :rules="[rules.required]"></v-text-field>
         </v-flex>
       </v-layout>
       <v-layout row justify-center>
@@ -89,6 +91,7 @@ import { mapActions } from "vuex";
 export default {
   name: "Register",
   data: () => ({
+    valid:true,
     roles: ["Engineer", "Admin"],
     name: "",
     email: "",
@@ -111,19 +114,31 @@ export default {
   methods: {
     ...mapActions(["registerUser"]),
     submit() {
-      this.snackbar = true;
-      const user = {
-        name: this.name,
-        email: this.email,
-        password: this.password,
-        passportNo: this.passportNo,
-        contactNo: this.contactNo,
-        state: this.state,
-        country: this.country,
-        role: this.role,
+      if(this.$refs.form.validate()){
+        const user = {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+          passportNo: this.passportNo,
+          contactNo: this.contactNo,
+          state: this.state,
+          country: this.country,
+          role: this.role,
       };
       console.log(user.name);
-      this.registerUser(user);
+      this.registerUser(user).then((res, err)=>{
+        if(res){
+          console.log(`res ${res}`);
+          this.snackbar = true;
+        }
+        if(err){
+          console.log(`err ${err}`);
+          this.snackbar = true;
+          this.text = 'An error occured. Try Again'
+        }
+      })
+      }
+      
     },
   },
   computed: {
