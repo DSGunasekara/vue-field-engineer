@@ -89,7 +89,7 @@
           ></v-select>
         </v-flex>
       </v-layout>
-      <v-layout row justify-center>
+      <v-layout row justify-center class="ma-5">
         <v-flex md2>
           <v-btn text class="primary" @click="submit" :loading="loading"
             >Register</v-btn
@@ -110,7 +110,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "Register",
@@ -139,7 +139,6 @@ export default {
   }),
   methods: {
     ...mapActions(["registerUser"]),
-    ...mapGetters(["allErrors"]),
     submit() {
       if (this.$refs.form.validate()) {
         this.loading = true;
@@ -159,6 +158,7 @@ export default {
             console.log(response);
             this.snackbar = true;
             this.text = "User registerd";
+            this.$router.push({ name: "Home" });
           })
           .catch((error) => {
             this.loading = false;

@@ -10,7 +10,7 @@ const getters = {
 
 const actions = {
   async fetchEngineers({ commit }) {
-    const response = await axios.get("http://localhost:5000/api/engineer");
+    const response = await axios.get("engineer");
     commit("setEngineers", response.data);
   },
 };

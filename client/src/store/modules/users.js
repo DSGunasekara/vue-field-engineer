@@ -12,7 +12,7 @@ const actions = {
   registerUser({ commit }, regUser) {
     return new Promise((resolve, reject) => {
       axios
-        .post("http://localhost:5000/api/user", {
+        .post("user", {
           ...regUser,
         })
         .then((response) => {
@@ -22,6 +22,22 @@ const actions = {
         })
         .catch((error) => {
           reject(error);
+        });
+    });
+  },
+
+  login(credentials) {
+    return new Promise((resolve, reject) => {
+      console.log(credentials);
+      axios
+        .post("login", { ...credentials })
+        .then((response) => {
+          console.log(`Res ${response}`);
+          resolve(response);
+        })
+        .catch((error) => {
+          console.log(error);
+          reject(`Err ${error}`);
         });
     });
   },
