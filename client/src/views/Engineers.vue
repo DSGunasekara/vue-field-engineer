@@ -29,9 +29,13 @@
               {{ engineer.rate }}
             </div>
             <div :class="`${engineer.availability} `">
-              <v-icon v-if="engineer.availability == true" small left>mdi-check</v-icon>
+              <v-icon v-if="engineer.availability == true" small left
+                >mdi-check</v-icon
+              >
               <v-icon v-else small left>mdi-window-close</v-icon>
-              {{ engineer.availability == true? 'Available': 'Not Available' }}
+              {{
+                engineer.availability == true ? "Available" : "Not Available"
+              }}
             </div>
           </v-card-text>
           <v-card-actions>

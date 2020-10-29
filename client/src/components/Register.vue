@@ -2,33 +2,32 @@
   <v-container>
     <h1 class="subheading grey--text">Register</h1>
     <v-form>
-      <v-layout row justify-space-around>
-        <v-flex md5>
-          <v-text-field v-model="name" label="Name" ></v-text-field>
+      <v-layout row justify-center class="px-3">
+        <v-flex md2>
+          <v-text-field v-model="name" label="Name"></v-text-field>
         </v-flex>
-        <v-flex md5>
-          <v-text-field v-model="email" label="Email" ></v-text-field>
+        <v-flex md2>
+          <v-text-field v-model="email" label="Email"></v-text-field>
         </v-flex>
       </v-layout>
-      <v-layout row justify-space-around>
-        <v-flex md5>
+      <v-layout row justify-center class="px-3">
+        <v-flex md2>
           <v-text-field v-model="passportNo" label="Passport No"></v-text-field>
         </v-flex>
-        <v-flex md5>
+        <v-flex md2>
           <v-text-field v-model="contactNo" label="Contact No"></v-text-field>
         </v-flex>
       </v-layout>
-      <v-layout row justify-space-around>
-        <v-flex md5>
+      <v-layout row justify-center class="px-3">
+        <v-flex md2>
           <v-text-field v-model="state" label="State"></v-text-field>
         </v-flex>
-        <v-flex md5>
+        <v-flex md2>
           <v-text-field v-model="country" label="Country"></v-text-field>
         </v-flex>
       </v-layout>
-      <v-layout row justify-space-around>
-        <v-flex md5>
-          
+      <v-layout row justify-center class="px-3">
+        <v-flex md2>
           <v-text-field
             v-model="password"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
@@ -40,11 +39,8 @@
             counter
             @click:append="show1 = !show1"
           ></v-text-field>
-
-          
         </v-flex>
-        <v-flex md5>
-          
+        <v-flex md2>
           <v-text-field
             v-model="repassword"
             :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
@@ -56,13 +52,17 @@
             counter
             @click:append="show2 = !show2"
           ></v-text-field>
-
-
         </v-flex>
       </v-layout>
       <v-layout row justify-space-around>
-        <v-flex md5>
-          <v-select v-model="role" :menu-props="{ offsetY: true }" :items="roles" label="Roles" :rules="[rules.required]"></v-select>
+        <v-flex md2>
+          <v-select
+            v-model="role"
+            :menu-props="{ offsetY: true }"
+            :items="roles"
+            label="Roles"
+            :rules="[rules.required]"
+          ></v-select>
         </v-flex>
       </v-layout>
       <v-layout row justify-center>
@@ -75,65 +75,62 @@
       {{ text }}
 
       <template v-slot:action="{ attrs }">
-        <v-btn
-          color="pink"
-          text
-          v-bind="attrs"
-          @click="snackbar = false">Close</v-btn>
+        <v-btn color="pink" text v-bind="attrs" @click="snackbar = false"
+          >Close</v-btn
+        >
       </template>
     </v-snackbar>
   </v-container>
 </template>
 
 <script>
-
-import { mapActions } from 'vuex';
+import { mapActions } from "vuex";
 
 export default {
   name: "Register",
-   data: () => ({
-      roles: ['Engineer', 'Admin'],
-      name:'',
-      email:'',
-      passportNo:'',
-      contactNo:'',
-      state:'',
-      country:'',
-      role:'',
-      password: '',
-      repassword: '',
-      show1: false,
-      show2: false,
-      rules: {
-        required: value => !!value || 'Required.',
-        min: v => v.length >= 8 || 'Min 8 characters',
-      },
-      snackbar: false,
-      text: 'user updated'
-    }),
-    methods:{
-      ...mapActions(['registerUser']),
-      submit(){
-        this.snackbar = true
-        const user = {
-          name: this.name,
-          email:this.email,
-          password: this.password,
-          passportNo: this.passportNo,
-          contactNo: this.contactNo,
-          state: this.state,
-          country: this.country,
-          role: this.role
-        }
-        console.log(user.name);
-        this.registerUser(user)
-      }
+  data: () => ({
+    roles: ["Engineer", "Admin"],
+    name: "",
+    email: "",
+    passportNo: "",
+    contactNo: "",
+    state: "",
+    country: "",
+    role: "",
+    password: "",
+    repassword: "",
+    show1: false,
+    show2: false,
+    rules: {
+      required: (value) => !!value || "Required.",
+      min: (v) => v.length >= 8 || "Min 8 characters",
     },
-    computed: {
+    snackbar: false,
+    text: "user updated",
+  }),
+  methods: {
+    ...mapActions(["registerUser"]),
+    submit() {
+      this.snackbar = true;
+      const user = {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        passportNo: this.passportNo,
+        contactNo: this.contactNo,
+        state: this.state,
+        country: this.country,
+        role: this.role,
+      };
+      console.log(user.name);
+      this.registerUser(user);
+    },
+  },
+  computed: {
     passwordConfirmationRule() {
-      return () => (this.password === this.repassword) || 'Password must match'
-    }
-}
+      return () => this.password === this.repassword || "Password must match";
+    },
+  },
 };
 </script>
 
