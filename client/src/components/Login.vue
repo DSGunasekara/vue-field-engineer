@@ -1,11 +1,11 @@
 <template>
   <v-container>
     <h1 class="subheading grey--text">Login</h1>
-    <v-layout row justify-space-around>
-      <v-flex md5>
+    <v-layout row justify-center >
+      <v-flex md2 class="ma-5">
         <v-text-field v-model="email" label="Email"></v-text-field>
       </v-flex>
-      <v-flex md5>
+      <v-flex md2 class="ma-5">
         <v-text-field
           v-model="password"
           :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"

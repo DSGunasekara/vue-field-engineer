@@ -2,32 +2,32 @@
   <v-container>
     <h1 class="subheading grey--text">Register</h1>
     <v-form>
-      <v-layout row justify-center class="px-3">
-        <v-flex md2>
+      <v-layout row justify-center>
+        <v-flex md2 class="ma-5">
           <v-text-field v-model="name" label="Name"></v-text-field>
         </v-flex>
-        <v-flex md2>
+        <v-flex md2 class="ma-5">
           <v-text-field v-model="email" label="Email"></v-text-field>
         </v-flex>
       </v-layout>
-      <v-layout row justify-center class="px-3">
-        <v-flex md2>
+      <v-layout row justify-center>
+        <v-flex md2 class="ma-5">
           <v-text-field v-model="passportNo" label="Passport No"></v-text-field>
         </v-flex>
-        <v-flex md2>
+        <v-flex md2 class="ma-5">
           <v-text-field v-model="contactNo" label="Contact No"></v-text-field>
         </v-flex>
       </v-layout>
-      <v-layout row justify-center class="px-3">
-        <v-flex md2>
+      <v-layout row justify-center>
+        <v-flex md2 class="ma-5">
           <v-text-field v-model="state" label="State"></v-text-field>
         </v-flex>
-        <v-flex md2>
+        <v-flex md2 class="ma-5">
           <v-text-field v-model="country" label="Country"></v-text-field>
         </v-flex>
       </v-layout>
-      <v-layout row justify-center class="px-3">
-        <v-flex md2>
+      <v-layout row justify-center>
+        <v-flex md2 class="ma-5">
           <v-text-field
             v-model="password"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
@@ -40,7 +40,7 @@
             @click:append="show1 = !show1"
           ></v-text-field>
         </v-flex>
-        <v-flex md2>
+        <v-flex md2 class="ma-5">
           <v-text-field
             v-model="repassword"
             :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
