@@ -1,31 +1,53 @@
 <template>
   <v-container>
     <h1 class="subheading grey--text">Register</h1>
-    <v-form ref="form"
-    v-model="valid"
-    lazy-validation>
+    <v-form ref="form" v-model="valid" lazy-validation>
       <v-layout row justify-center>
         <v-flex md2 class="ma-5">
-          <v-text-field v-model="name" label="Name" :rules="[rules.required]"></v-text-field>
+          <v-text-field
+            v-model="name"
+            label="Name"
+            :rules="[rules.required]"
+          ></v-text-field>
         </v-flex>
         <v-flex md2 class="ma-5">
-          <v-text-field v-model="email" label="Email" :rules="[rules.required]"></v-text-field>
+          <v-text-field
+            v-model="email"
+            label="Email"
+            :rules="[rules.required]"
+          ></v-text-field>
         </v-flex>
       </v-layout>
       <v-layout row justify-center>
         <v-flex md2 class="ma-5">
-          <v-text-field v-model="passportNo" label="Passport No" :rules="[rules.required]"></v-text-field>
+          <v-text-field
+            v-model="passportNo"
+            label="Passport No"
+            :rules="[rules.required]"
+          ></v-text-field>
         </v-flex>
         <v-flex md2 class="ma-5">
-          <v-text-field v-model="contactNo" label="Contact No" :rules="[rules.required]"></v-text-field>
+          <v-text-field
+            v-model="contactNo"
+            label="Contact No"
+            :rules="[rules.required]"
+          ></v-text-field>
         </v-flex>
       </v-layout>
       <v-layout row justify-center>
         <v-flex md2 class="ma-5">
-          <v-text-field v-model="state" label="State" :rules="[rules.required]"></v-text-field>
+          <v-text-field
+            v-model="state"
+            label="State"
+            :rules="[rules.required]"
+          ></v-text-field>
         </v-flex>
         <v-flex md2 class="ma-5">
-          <v-text-field v-model="country" label="Country" :rules="[rules.required]"></v-text-field>
+          <v-text-field
+            v-model="country"
+            label="Country"
+            :rules="[rules.required]"
+          ></v-text-field>
         </v-flex>
       </v-layout>
       <v-layout row justify-center>
@@ -69,7 +91,9 @@
       </v-layout>
       <v-layout row justify-center>
         <v-flex md2>
-          <v-btn text class="primary" @click="submit">Register</v-btn>
+          <v-btn text class="primary" @click="submit" :loading="loading"
+            >Register</v-btn
+          >
         </v-flex>
       </v-layout>
     </v-form>
@@ -86,12 +110,12 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Register",
   data: () => ({
-    valid:true,
+    valid: true,
     roles: ["Engineer", "Admin"],
     name: "",
     email: "",
@@ -109,12 +133,16 @@ export default {
       min: (v) => v.length >= 8 || "Min 8 characters",
     },
     snackbar: false,
-    text: "user updated",
+    text: "",
+    loading: false,
+    errorCode: "",
   }),
   methods: {
     ...mapActions(["registerUser"]),
+    ...mapGetters(["allErrors"]),
     submit() {
-      if(this.$refs.form.validate()){
+      if (this.$refs.form.validate()) {
+        this.loading = true;
         const user = {
           name: this.name,
           email: this.email,
@@ -124,21 +152,29 @@ export default {
           state: this.state,
           country: this.country,
           role: this.role,
-      };
-      console.log(user.name);
-      this.registerUser(user).then((res, err)=>{
-        if(res){
-          console.log(`res ${res}`);
-          this.snackbar = true;
-        }
-        if(err){
-          console.log(`err ${err}`);
-          this.snackbar = true;
-          this.text = 'An error occured. Try Again'
-        }
-      })
+        };
+        this.registerUser(user)
+          .then((response) => {
+            this.loading = false;
+            console.log(response);
+            this.snackbar = true;
+            this.text = "User registerd";
+          })
+          .catch((error) => {
+            this.loading = false;
+            console.log(error.response.status);
+            this.snackbar = true;
+            this.email = "";
+            this.passportNo = "";
+            this.password = "";
+            this.repassword = "";
+            if (error.response.status === 409) {
+              this.text = "User already exits";
+            } else {
+              this.text = "An Error occured! Try again";
+            }
+          });
       }
-      
     },
   },
   computed: {
