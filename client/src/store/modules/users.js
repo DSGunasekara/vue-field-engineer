@@ -2,19 +2,20 @@ import axios from "axios";
 
 const state = {
   users: [],
+  token: localStorage.getItem("access_token") || null,
 };
 
 const getters = {
-  allErrors: (state) => state.errors,
+  isLoggedIn(state) {
+    return state.token !== null;
+  },
 };
 
 const actions = {
   registerUser({ commit }, regUser) {
     return new Promise((resolve, reject) => {
       axios
-        .post("user", {
-          ...regUser,
-        })
+        .post("user", { ...regUser })
         .then((response) => {
           console.log(response);
           commit("regUser", response.data);
@@ -26,20 +27,28 @@ const actions = {
     });
   },
 
-  login(credentials) {
+  login({ commit }, credentials) {
     return new Promise((resolve, reject) => {
-      console.log(credentials);
       axios
         .post("login", { ...credentials })
         .then((response) => {
-          console.log(`Res ${response}`);
+          console.log(`Res ${response.data}`);
+          const token = response.data;
+          localStorage.setItem("access_token", token);
+          commit("setToken", token);
           resolve(response);
         })
         .catch((error) => {
-          console.log(error);
-          reject(`Err ${error}`);
+          console.log(`Err ${error}`);
+          reject(error);
         });
     });
+  },
+  logout({ commit }) {
+    if (getters.isLoggedIn) {
+      localStorage.removeItem("access_token");
+      commit("removeToken");
+    }
   },
 };
 
@@ -47,8 +56,11 @@ const mutations = {
   regUser(user) {
     state.users.shift(user);
   },
-  addError(err) {
-    state.errors = err;
+  setToken(token) {
+    state.token = token;
+  },
+  removeToken() {
+    state.token = null;
   },
 };
 

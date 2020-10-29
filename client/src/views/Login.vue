@@ -47,6 +47,15 @@
         >Login</v-btn
       >
     </v-form>
+    <v-snackbar top v-model="snackbar">
+      {{ text }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn color="pink" text v-bind="attrs" @click="snackbar = false"
+          >Close</v-btn
+        >
+      </template>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -60,6 +69,8 @@ export default {
     password: "",
     show1: false,
     loading: false,
+    snackbar: false,
+    text: "",
     rules: {
       required: (value) => !!value || "Required.",
       min: (v) => v.length >= 8 || "Min 8 characters",
@@ -72,8 +83,23 @@ export default {
         email: this.email,
         password: this.password,
       };
-      console.log(credentials);
-      this.login(credentials);
+      this.loading = true;
+      this.login(credentials)
+        .then((res) => {
+          console.log(res);
+          this.loading = false;
+          this.snackbar = true;
+          this.text = "Logged In sucessfully";
+          this.$router.push("/engineers");
+        })
+        .catch((error) => {
+          console.log(error);
+          this.snackbar = true;
+          this.loading = false;
+          this.text = "Invalid credentials";
+          this.email = "";
+          this.password = "";
+        });
     },
   },
 };

@@ -13,7 +13,7 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn text class="grey--text">
+      <v-btn @click="logout" text class="grey--text" v-if="isLoggedIn">
         <span>Logout</span>
         <v-icon>mdi-logout</v-icon>
       </v-btn>
@@ -48,8 +48,13 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Navbar",
+  methods: {
+    ...mapGetters(["isLoggedIn"]),
+    ...mapActions(["logout"]),
+  },
   data() {
     return {
       drawer: null,
