@@ -3,14 +3,14 @@
     <h1 class="subheading grey--text">Register</h1>
     <v-form ref="form" v-model="valid" lazy-validation>
       <v-layout row justify-center>
-        <v-flex md2 class="ma-5">
+        <v-flex md5 class="ma-5">
           <v-text-field
             v-model="name"
             label="Name"
             :rules="[rules.required]"
           ></v-text-field>
         </v-flex>
-        <v-flex md2 class="ma-5">
+        <v-flex md5 class="ma-5">
           <v-text-field
             v-model="email"
             label="Email"
@@ -19,14 +19,14 @@
         </v-flex>
       </v-layout>
       <v-layout row justify-center>
-        <v-flex md2 class="ma-5">
+        <v-flex md5 class="ma-5">
           <v-text-field
             v-model="passportNo"
             label="Passport No"
             :rules="[rules.required]"
           ></v-text-field>
         </v-flex>
-        <v-flex md2 class="ma-5">
+        <v-flex md5 class="ma-5">
           <v-text-field
             v-model="contactNo"
             label="Contact No"
@@ -35,14 +35,14 @@
         </v-flex>
       </v-layout>
       <v-layout row justify-center>
-        <v-flex md2 class="ma-5">
+        <v-flex md5 class="ma-5">
           <v-text-field
             v-model="state"
             label="State"
             :rules="[rules.required]"
           ></v-text-field>
         </v-flex>
-        <v-flex md2 class="ma-5">
+        <v-flex md5 class="ma-5">
           <v-text-field
             v-model="country"
             label="Country"
@@ -51,7 +51,7 @@
         </v-flex>
       </v-layout>
       <v-layout row justify-center>
-        <v-flex md2 class="ma-5">
+        <v-flex md5 class="ma-5">
           <v-text-field
             v-model="password"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
@@ -64,7 +64,7 @@
             @click:append="show1 = !show1"
           ></v-text-field>
         </v-flex>
-        <v-flex md2 class="ma-5">
+        <v-flex md5 class="ma-5">
           <v-text-field
             v-model="repassword"
             :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
@@ -79,7 +79,7 @@
         </v-flex>
       </v-layout>
       <v-layout row justify-space-around>
-        <v-flex md2>
+        <v-flex md5>
           <v-select
             v-model="role"
             :menu-props="{ offsetY: true }"

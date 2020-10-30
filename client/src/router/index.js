@@ -3,8 +3,9 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Jobs from "../views/Jobs";
 import Engineers from "../views/Engineers";
-import Login from "../views/Login";
-import Register from "../views/Register";
+// import Login from "../views/Login";
+// import Register from "../views/Register";
+import Landing from "../views/Landing";
 
 Vue.use(VueRouter);
 
@@ -20,6 +21,14 @@ const routes = [
     component: Jobs,
   },
   {
+    path: "/landing",
+    name: "landing",
+    component: Landing,
+    meta: {
+      requireVisitors: true,
+    },
+  },
+  {
     path: "/engineers",
     name: "engineers",
     component: Engineers,
@@ -27,22 +36,22 @@ const routes = [
       requireAuth: true,
     },
   },
-  {
-    path: "/login",
-    name: "login",
-    component: Login,
-    meta: {
-      requireVisitors: true,
-    },
-  },
-  {
-    path: "/register",
-    name: "register",
-    component: Register,
-    meta: {
-      requireVisitors: true,
-    },
-  },
+  // {
+  //   path: "/login",
+  //   name: "login",
+  //   component: Login,
+  //   meta: {
+  //     requireVisitors: true,
+  //   },
+  // },
+  // {
+  //   path: "/register",
+  //   name: "register",
+  //   component: Register,
+  //   meta: {
+  //     requireVisitors: true,
+  //   },
+  // },
 ];
 
 const router = new VueRouter({

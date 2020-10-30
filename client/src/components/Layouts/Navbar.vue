@@ -11,10 +11,7 @@
         <span>NOT_FOUND</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn @click="logout" text class="grey--text" v-if="isLoggedIn()">
-        <span>Logout</span>
-        <v-icon>mdi-logout</v-icon>
-      </v-btn>
+      <Dialog v-if="isLoggedIn()"/>
     </v-toolbar>
 
     <v-navigation-drawer
@@ -43,15 +40,19 @@
       </v-list>
     </v-navigation-drawer>
   </nav>
+  
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
+import Dialog from '../Dialog'
 export default {
   name: "Navbar",
+  components:{
+    Dialog
+  },
   methods: {
     ...mapGetters(["isLoggedIn"]),
-    ...mapActions(["logout"]),
   },
   data() {
     return {
