@@ -39,6 +39,9 @@ const routes = [
     path: "/register",
     name: "register",
     component: Register,
+    meta: {
+      requireVisitors: true,
+    },
   },
 ];
 

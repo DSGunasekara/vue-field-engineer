@@ -9,15 +9,18 @@ axios.defaults.baseURL = "http://localhost:5000/api";
 
 Vue.config.productionTip = false;
 
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some((record) => record.meta.requireAuth)) {
-//     if (!store.getters.isLoggedIn) {
-//       next({
-//         path: "/login",
-//       });
-//     }
-//   }
-// });
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requireAuth)) {
+    if (!store.getters.isLoggedIn) {
+      next({ name: "login" });
+    } else next();
+  } else if (to.matched.some((record) => record.meta.requireVisitors)) {
+    if (store.getters.isLoggedIn) {
+      next({ name: "engineers" });
+    } else next();
+  }
+  next();
+});
 
 new Vue({
   router,

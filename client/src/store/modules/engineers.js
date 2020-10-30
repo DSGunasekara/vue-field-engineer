@@ -10,12 +10,10 @@ const getters = {
 
 const actions = {
   async fetchEngineers({ commit }) {
-    const response = await axios.get("engineer", {
-      headers: {
-        "x-access-token":
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWY5OTY0Y2MyMDU5OWY1MTc3OWE2NDA5Iiwicm9sZSI6IkVuZ2luZWVyIn0sImlhdCI6MTYwNDAzMzg0MSwiZXhwIjoxNjA0MzkzODQxfQ.-TDAMYMzoTK5oqjyL4rvev0qqovoTbXjDZAQRIKZWN0",
-      },
-    });
+    axios.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${localStorage.getItem("access_token")}`;
+    const response = await axios.get("engineer");
     commit("setEngineers", response.data);
   },
 };
