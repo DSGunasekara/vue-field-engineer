@@ -106,6 +106,7 @@
         >
       </template>
     </v-snackbar>
+    {{ token }}
   </v-container>
 </template>
 
@@ -180,6 +181,9 @@ export default {
   computed: {
     passwordConfirmationRule() {
       return () => this.password === this.repassword || "Password must match";
+    },
+    token() {
+      return this.$store.getters.isLoggedIn;
     },
   },
 };
