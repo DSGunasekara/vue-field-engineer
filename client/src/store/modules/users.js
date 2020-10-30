@@ -17,7 +17,6 @@ const actions = {
       axios
         .post("user", { ...regUser })
         .then((response) => {
-          console.log(response);
           commit("regUser", response.data);
           resolve(response);
         })
@@ -32,7 +31,6 @@ const actions = {
       axios
         .post("login", { ...credentials })
         .then((response) => {
-          console.log(`Res ${response.data}`);
           const token = response.data;
           localStorage.setItem("access_token", token);
           commit("setToken", token);

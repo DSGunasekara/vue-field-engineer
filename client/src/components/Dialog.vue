@@ -43,7 +43,7 @@ export default {
         userLogout(){
             this.logout()
             this.dialog = false
-            this.$router.push('/jobs')
+            this.$router.push('/landing')
         }
     }
   }

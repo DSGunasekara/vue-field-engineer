@@ -12,7 +12,7 @@ Vue.config.productionTip = false;
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requireAuth)) {
     if (!store.getters.isLoggedIn) {
-      next({ name: "login" });
+      next({ name: "landing" });
     } else next();
   } else if (to.matched.some((record) => record.meta.requireVisitors)) {
     if (store.getters.isLoggedIn) {
