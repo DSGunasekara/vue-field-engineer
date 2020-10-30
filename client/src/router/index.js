@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import Jobs from "../views/Jobs";
 import Engineers from "../views/Engineers";
 import Landing from "../views/Landing";
+import Profile from "../components/Profile";
 
 Vue.use(VueRouter);
 
@@ -30,6 +31,14 @@ const routes = [
     path: "/engineers",
     name: "engineers",
     component: Engineers,
+    meta: {
+      requireAuth: true,
+    },
+  },
+  {
+    path: "/profile",
+    name: "profile",
+    component: Profile,
     meta: {
       requireAuth: true,
     },

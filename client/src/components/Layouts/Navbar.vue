@@ -11,7 +11,7 @@
         <span>NOT_FOUND</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <Dialog v-if="isLoggedIn()"/>
+      <Logout v-if="isLoggedIn()"/>
     </v-toolbar>
 
     <v-navigation-drawer
@@ -37,6 +37,7 @@
             </v-list-item-content>
           </v-list-item-title>
         </v-list-item>
+        <AddJob/>
       </v-list>
     </v-navigation-drawer>
   </nav>
@@ -45,11 +46,15 @@
 
 <script>
 import { mapGetters } from "vuex";
-import Dialog from '../Dialog'
+import Logout from '../Logout'
+import AddJob from '../AddJob'
+
+
 export default {
   name: "Navbar",
   components:{
-    Dialog
+    Logout,
+    AddJob
   },
   methods: {
     ...mapGetters(["isLoggedIn"]),
@@ -61,6 +66,7 @@ export default {
         { icon: "mdi-view-dashboard", text: "Dashboard", route: "/" },
         { icon: "mdi-folder", text: "Jobs", route: "/jobs" },
         { icon: "mdi-account-group", text: "Engineers", route: "/engineers" },
+        { icon: "mdi-account", text: "Profile", route: "/profile" },
       ],
     };
   },

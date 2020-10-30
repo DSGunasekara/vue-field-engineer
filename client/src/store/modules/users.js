@@ -1,23 +1,25 @@
 import axios from "axios";
 
 const state = {
-  users: [],
   token: localStorage.getItem("access_token") || null,
+  profile: null,
 };
 
 const getters = {
   isLoggedIn(state) {
     return state.token !== null;
   },
+  getProfile(state) {
+    return state.profile;
+  },
 };
 
 const actions = {
-  registerUser({ commit }, regUser) {
+  registerUser(regUser) {
     return new Promise((resolve, reject) => {
       axios
         .post("user", { ...regUser })
         .then((response) => {
-          commit("regUser", response.data);
           resolve(response);
         })
         .catch((error) => {
@@ -26,7 +28,7 @@ const actions = {
     });
   },
 
-  login({ commit }, credentials) {
+  login({ commit, dispatch }, credentials) {
     return new Promise((resolve, reject) => {
       axios
         .post("login", { ...credentials })
@@ -34,10 +36,11 @@ const actions = {
           const token = response.data;
           localStorage.setItem("access_token", token);
           commit("setToken", token);
+          dispatch("getUser");
           resolve(response);
         })
         .catch((error) => {
-          console.log(`Err ${error}`);
+          console.log(`Login error ${error}`);
           reject(error);
         });
     });
@@ -48,18 +51,29 @@ const actions = {
       commit("removeToken");
     }
   },
+  getUser({ commit }) {
+    return new Promise((resolve, reject) => {
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${localStorage.getItem("access_token")}`;
+      axios
+        .get("login")
+        .then((response) => {
+          commit("setProfile", { ...response.data });
+          resolve(response);
+        })
+        .catch((error) => {
+          console.log(`Get user ${error}`);
+          reject(error);
+        });
+    });
+  },
 };
 
 const mutations = {
-  regUser(user) {
-    state.users.shift(user);
-  },
-  setToken(token) {
-    state.token = token;
-  },
-  removeToken() {
-    state.token = null;
-  },
+  setToken: (state, token) => (state.token = token),
+  removeToken: () => (state.token = null),
+  setProfile: (state, user) => (state.profile = user),
 };
 
 export default {

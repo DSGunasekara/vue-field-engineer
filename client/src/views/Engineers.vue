@@ -7,8 +7,8 @@
         sm6
         md4
         lg3
-        v-for="engineer in allEngineers"
-        :key="engineer.name"
+        v-for="(engineer, index) in allEngineers"
+        :key="index"
       >
         <v-card text class="ma-3">
           <v-responsive class="pt-4 mx-4">

@@ -5,9 +5,11 @@
 </template>
 
 <script>
+
 export default {
   name: "Home",
-  components: {},
+  components: {
+  },
   data: () => ({
     reg: false,
     log: true,

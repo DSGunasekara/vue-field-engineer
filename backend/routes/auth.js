@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const router = require("express").Router();
 const config = require("config");
+const verify = require("../middleware/verify");
 
 const User = require("../models/User");
 
@@ -30,6 +31,14 @@ router.post("/", async (req, res) => {
         res.status(200).send(token);
       }
     );
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+});
+
+router.get("/", verify, async (req, res) => {
+  try {
+    return res.status(200).send(req.user);
   } catch (error) {
     return res.status(500).send(error);
   }
