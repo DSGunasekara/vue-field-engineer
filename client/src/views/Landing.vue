@@ -5,7 +5,7 @@
             <div>
                 <v-tabs v-model="tab" show-arrows background-color="primary" icons-and-text dark grow>
                     <v-tabs-slider color="primary lighten-4"></v-tabs-slider>
-                    <v-tab v-for="i in tabs" :key="i">
+                    <v-tab v-for="(i, index) in tabs" :key="index">
                         <v-icon large>{{ i.icon }}</v-icon>
                         <div class="caption py-1">{{ i.name }}</div>
                     </v-tab>
@@ -31,8 +31,8 @@
 </template>
 
 <script>
-import Register from './Register'
-import Login from './Login'
+import Register from '../components/Register'
+import Login from '../components/Login'
 
 export default {
     name:"LandingPage",
