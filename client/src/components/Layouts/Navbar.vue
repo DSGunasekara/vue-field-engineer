@@ -10,10 +10,8 @@
         404
         <span>NOT_FOUND</span>
       </v-toolbar-title>
-
       <v-spacer></v-spacer>
-
-      <v-btn @click="logout" text class="grey--text" v-if="isLoggedIn">
+      <v-btn @click="logout" text class="grey--text" v-if="isLoggedIn()">
         <span>Logout</span>
         <v-icon>mdi-logout</v-icon>
       </v-btn>
