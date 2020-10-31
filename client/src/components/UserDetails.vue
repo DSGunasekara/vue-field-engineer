@@ -8,7 +8,7 @@
                     <span justify>
                         <v-tooltip top>
                             <template v-slot:activator="{ on }">
-                                <v-btn text class="grey--text" v-on="on">
+                                <v-btn text class="grey--text" v-on="on" router :to="'/updateUserDetails'">
                                     <v-icon>mdi-account-edit</v-icon>
                                 </v-btn>
                             </template>

@@ -25,7 +25,7 @@
     - [-] Dispatched
   - [-] Job location view
   - [-] Field Engineer Management
-    - [-] Profile
+    - [x] Profile
     - [-] Rating
   - [-] Customer
   - [-] Job Management
