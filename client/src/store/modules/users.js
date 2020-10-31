@@ -104,6 +104,23 @@ const actions = {
         });
     });
   },
+  updatePassword({ dispatch }, user) {
+    return new Promise((resolve, reject) => {
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${localStorage.getItem("access_token")}`;
+
+      axios
+        .patch(`/user/updatePassword/${user.id}`, { ...user })
+        .then((response) => {
+          dispatch("getProfile", user.id);
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  },
 };
 
 const mutations = {

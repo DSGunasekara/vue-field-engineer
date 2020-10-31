@@ -68,6 +68,38 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
+router.patch("/updatePassword/:id", async (req, res, next) => {
+  try {
+    const oldPass = req.body.oldPassword;
+    const newPass = req.body.password;
+
+    // console.log(oldPass, newPass);
+
+    const found_user = await User.findOne({ _id: req.body.id });
+    if (!found_user) return res.status(404).send("No user found");
+
+    const isMatch = await bcrypt.compare(oldPass, found_user.password);
+
+    if (!isMatch) return res.status(401).send("Old Password is incorrect");
+
+    if (req.body.password) {
+      const salt = await bcrypt.genSalt(10);
+      enPass = await bcrypt.hash(newPass, salt);
+      found_user.password = enPass;
+    }
+
+    found_user.save((err, updated_user) => {
+      if (err) {
+        return res.status(400).send(err);
+      }
+
+      return res.status(200).send("Password Update Success");
+    });
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+});
+
 //delete user
 router.delete("/:id", async (req, res) => {
   try {

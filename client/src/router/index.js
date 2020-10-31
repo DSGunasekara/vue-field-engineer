@@ -5,7 +5,8 @@ import Jobs from "../views/Jobs";
 import Engineers from "../views/Engineers";
 import Landing from "../views/Landing";
 import Profile from "../components/Profile";
-import UpdateUserDetails from "../components/UpdateUserDetails";
+// import UpdateUserDetails from "../components/UpdateUserDetails";
+import UpdatePassword from "../components/UpdatePassword";
 
 Vue.use(VueRouter);
 
@@ -47,7 +48,7 @@ const routes = [
   {
     path: "/updateUserDetails",
     name: "updateUserDetails",
-    component: UpdateUserDetails,
+    component: UpdatePassword,
     meta: {
       requireAuth: true,
     },
