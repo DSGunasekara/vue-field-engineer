@@ -10,7 +10,7 @@
             :rules="[rules.required, rules.min]"
             :type="show1 ? 'text' : 'password'"
             name="input-10-1"
-            label="Password"
+            label="Old Password"
             hint="At least 8 characters"
             counter
             @click:append="show1 = !show1"
@@ -23,7 +23,7 @@
             :rules="[rules.required, rules.min]"
             :type="show2 ? 'text' : 'password'"
             name="input-10-1"
-            label="Password"
+            label="New Password"
             hint="At least 8 characters"
             counter
             @click:append="show2 = !show2"
@@ -99,18 +99,16 @@ export default {
       };
       this.updatePassword(user)
         .then((response) => {
-          console.log(response);
-          this.loading = false;
           this.snackbar = true;
           this.text = "password updated succusfully";
-          this.$router.push("/profile");
+          console.log(response);
+          this.loading = false;
         })
         .catch((error) => {
           console.log(error);
           this.loading = false;
           this.snackbar = true;
           this.text = "An error occured";
-          this.$router.push("/profile");
         });
     },
     cancel() {

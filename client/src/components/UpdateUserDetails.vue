@@ -108,14 +108,12 @@ export default {
           this.loading = false;
           this.snackbar = true;
           this.text = "user updated succusfully";
-          this.$router.push("/profile");
         })
         .catch((error) => {
           console.log(error);
           this.loading = false;
           this.snackbar = true;
           this.text = "An error occured";
-          this.$router.push("/profile");
         });
     },
     cancel() {

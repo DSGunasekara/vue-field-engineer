@@ -13,7 +13,7 @@
                   class="grey--text"
                   v-on="on"
                   router
-                  :to="'/updateUserDetails'"
+                  :to="'/updateProfile'"
                 >
                   <v-icon>mdi-account-edit</v-icon>
                 </v-btn>
