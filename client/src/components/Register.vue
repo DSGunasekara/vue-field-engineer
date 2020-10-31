@@ -135,7 +135,6 @@ export default {
     snackbar: false,
     text: "",
     loading: false,
-    errorCode: "",
   }),
   methods: {
     ...mapActions(["registerUser"]),

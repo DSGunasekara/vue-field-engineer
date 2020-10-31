@@ -1,69 +1,131 @@
-<template>    
-      <v-card>
-        <v-card-title>
-          <span class="headline">Update Profile</span>
-        </v-card-title>
-        <v-form ref="form" v-model="valid" lazy-validation>
-            <v-card-text>
-                <v-container>
-                    <v-row>
-                        <v-col cols="12" md="6">
-                            <v-text-field label="Name" v-model="name" required></v-text-field>
-                        </v-col>
-                        <v-col cols="12" md="6" >
-                            <v-text-field label="Email" v-model="email"></v-text-field>
-                        </v-col>
-                        <v-col cols="12" md="6">
-                            <v-text-field label="Passport No" v-model="passportNo" required></v-text-field>
-                        </v-col>
-                        <v-col cols="12" md="6">
-                            <v-text-field label="Contact No" v-model="contactNo" required></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="6">
-                            <v-text-field label="State" v-model="state" required></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="6">
-                        <v-text-field label="Country" v-model="country" required></v-text-field>
-                        </v-col>
-                    </v-row>
-                </v-container>
-            </v-card-text>
-            <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="dialog = false">
-                    Close
-                </v-btn>
-                <v-btn color="blue darken-1" text @click="save">
-                    Save
-                </v-btn>
-                </v-card-actions>
-        </v-form>
-      </v-card>
+<template>
+  <v-container>
+    <h1 class="subheading grey--text">Update Profile</h1>
+    <v-form ref="form" v-model="valid" lazy-validation>
+      <v-layout row justify-center>
+        <v-flex md5 class="ma-5">
+          <v-text-field
+            v-model="getProfile.name"
+            label="Name"
+            :rules="[rules.required]"
+          ></v-text-field>
+        </v-flex>
+        <v-flex md5 class="ma-5">
+          <v-text-field
+            v-model="getProfile.email"
+            label="Email"
+            :rules="[rules.required]"
+          ></v-text-field>
+        </v-flex>
+      </v-layout>
+      <v-layout row justify-center>
+        <v-flex md5 class="ma-5">
+          <v-text-field
+            v-model="getProfile.passportNo"
+            label="Passport No"
+            :rules="[rules.required]"
+          ></v-text-field>
+        </v-flex>
+        <v-flex md5 class="ma-5">
+          <v-text-field
+            v-model="getProfile.contactNo"
+            label="Contact No"
+            :rules="[rules.required]"
+          ></v-text-field>
+        </v-flex>
+      </v-layout>
+      <v-layout row justify-center>
+        <v-flex md5 class="ma-5">
+          <v-text-field
+            v-model="getProfile.state"
+            label="State"
+            :rules="[rules.required]"
+          ></v-text-field>
+        </v-flex>
+        <v-flex md5 class="ma-5">
+          <v-text-field
+            v-model="getProfile.country"
+            label="Country"
+            :rules="[rules.required]"
+          ></v-text-field>
+        </v-flex>
+      </v-layout>
+
+      <v-layout row justify-center class="ma-5">
+        <v-flex md2>
+          <v-btn text class="primary" @click="submit" :loading="loading"
+            >Update</v-btn
+          >
+        </v-flex>
+        <v-flex md2>
+          <v-btn text class="error" @click="cancel">Cancel</v-btn>
+        </v-flex>
+      </v-layout>
+    </v-form>
+    <v-snackbar top v-model="snackbar">
+      {{ text }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn color="pink" text v-bind="attrs" @click="snackbar = false"
+          >Close</v-btn
+        >
+      </template>
+    </v-snackbar>
+  </v-container>
 </template>
 
 <script>
-    import { mapGetters } from 'vuex'
-  export default {
-      computed:{
-          ...mapGetters(['getProfile']),
-          },
-    data () {
-        return {
-            dialog: false,
-            user: null,
-            name: '',
-            email: '',
-            passportNo: '',
-            contactNo: '',
-            state: '',
-            country: this.getProfile.name
+import { mapGetters, mapActions } from "vuex";
 
-        }
+export default {
+  name: "UpdateUserDetails",
+  data: () => ({
+    valid: true,
+    rules: {
+      required: (value) => !!value || "Required.",
+      min: (v) => v.length >= 8 || "Min 8 characters",
     },
-    methods:{
-        save(){
-            // console.log(this.getProfile.name);
-        }
+    snackbar: false,
+    text: "",
+    loading: false,
+  }),
+  methods: {
+    ...mapActions(["updateUser"]),
+    submit() {
+      this.loading = true;
+      const user = {
+        id: this.getProfile._id,
+        name: this.getProfile.name,
+        email: this.getProfile.email,
+        passportNo: this.getProfile.passportNo,
+        state: this.getProfile.state,
+        country: this.getProfile.country,
+      };
+      this.updateUser(user)
+        .then((response) => {
+          console.log(response);
+          this.loading = false;
+          this.snackbar = true;
+          this.text = "user updated succusfully";
+          this.$router.push("/profile");
+        })
+        .catch((error) => {
+          console.log(error);
+          this.loading = false;
+          this.snackbar = true;
+          this.text = "An error occured";
+          this.$router.push("/profile");
+        });
     },
-  }
+    cancel() {
+      this.$router.push("/profile");
+    },
+  },
+  computed: {
+    ...mapGetters(["getProfile"]),
+  },
+};
 </script>
+
+<style>
+</style>
