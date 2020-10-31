@@ -6,7 +6,7 @@ const Engineer = require("../models/Engineer");
 //get all users
 router.get("/", async (req, res) => {
   try {
-    const users = await User.find({});
+    const users = await User.find({}).select("-password");
     return res.status(200).send(users);
   } catch (error) {
     console.log(error);
@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
 //get one user
 router.get("/:id", async (req, res) => {
   try {
-    const user = await User.findOne({ _id: req.params.id });
+    const user = await User.findOne({ _id: req.params.id }).select("-password");
     if (!user) return res.status(404).send("User does not exits");
     return res.status(200).send(user);
   } catch (error) {

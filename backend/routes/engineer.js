@@ -6,6 +6,7 @@ const verify = require("../middleware/verify");
 router.get("/", verify, async (req, res) => {
   try {
     await Engineer.find({})
+      .select("-password")
       .populate("user")
       .populate("jobList")
       .exec()
@@ -23,6 +24,7 @@ router.get("/", verify, async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     await Engineer.findOne({ _id: req.params.id })
+      .select("-password")
       .populate("user")
       .populate("jobList")
       .exec()
