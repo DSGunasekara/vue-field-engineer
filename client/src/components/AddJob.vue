@@ -1,8 +1,8 @@
 <template>
-  <v-row justify="center">
+  <v-row justify="right">
     <v-dialog v-model="dialog" max-width="600px">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on"> Add a job </v-btn>
+        <v-btn color="grey" text dark v-bind="attrs" v-on="on" class="my-5"> <v-icon>mdi-plus-circle</v-icon> Add a job </v-btn>
       </template>
       <v-card>
         <v-card-title>
@@ -96,6 +96,7 @@ export default {
       this.addJob(job)
       .then((res)=>{
         console.log(res);
+        this.dialog = false
       }).catch((err)=>{
         console.log(err);
       })

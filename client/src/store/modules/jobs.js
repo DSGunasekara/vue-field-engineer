@@ -15,7 +15,7 @@ const actions = {
         "Authorization"
       ] = `Bearer ${localStorage.getItem("access_token")}`;
       axios
-        .get("jobs")
+        .get("job")
         .then((response) => {
           commit("setJobs", response.data);
           resolve(response);
@@ -30,7 +30,7 @@ const actions = {
       axios
         .post("job", { ...job })
         .then((response) => {
-          commit("setJobs", response.data);
+          commit("setJob", response.data);
           resolve(response);
         })
         .catch((error) => {
@@ -41,7 +41,8 @@ const actions = {
 };
 
 const mutations = {
-  setJobs: (state, job) => state.jobs.push(job),
+  setJobs: (state, jobs) => (state.jobs = jobs),
+  setJob: (state, job) => state.jobs.push(job),
 };
 
 export default {

@@ -37,7 +37,6 @@
             </v-list-item-content>
           </v-list-item-title>
         </v-list-item>
-        <AddJob/>
       </v-list>
     </v-navigation-drawer>
   </nav>
@@ -47,14 +46,12 @@
 <script>
 import { mapGetters } from "vuex";
 import Logout from '../Logout'
-import AddJob from '../AddJob'
 
 
 export default {
   name: "Navbar",
   components:{
     Logout,
-    AddJob
   },
   methods: {
     ...mapGetters(["isLoggedIn"]),
