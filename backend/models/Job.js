@@ -21,7 +21,6 @@ const JobSchema = new mongoose.Schema({
   },
   svrId: {
     type: String,
-    required: true,
   },
   lconName: {
     type: String,

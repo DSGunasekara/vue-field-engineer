@@ -5,7 +5,7 @@ const state = {
 };
 
 const getters = {
-  allEngineers: (state) => state.engineers,
+  allJobs: (state) => state.jobs,
 };
 
 const actions = {
@@ -30,18 +30,18 @@ const actions = {
       axios
         .post("job", { ...job })
         .then((response) => {
-          commit("addJob", response.data);
+          commit("setJobs", response.data);
           resolve(response);
         })
         .catch((error) => {
-          resolve(error);
+          reject(error);
         });
     });
   },
 };
 
 const mutations = {
-  setJobs: (state, jobs) => (state.jobs = jobs),
+  setJobs: (state, job) => state.jobs.push(job),
 };
 
 export default {
