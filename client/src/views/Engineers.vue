@@ -1,6 +1,9 @@
 <template>
   <v-container class="my-5">
     <h1 class="subheading grey--text">Engineers</h1>
+    <!-- <div v-if="loading == true">
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    </div> -->
     <v-layout row wrap>
       <v-flex
         xs12
@@ -55,12 +58,23 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Engineers",
+  data() {
+    return {
+      loading: true,
+    };
+  },
   methods: {
     ...mapActions(["fetchEngineers"]),
   },
   computed: mapGetters(["allEngineers"]),
   created() {
-    this.fetchEngineers();
+    this.fetchEngineers()
+      .then(() => {
+        this.loading = false;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
 };
 </script>

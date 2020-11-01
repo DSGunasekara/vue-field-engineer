@@ -16,10 +16,10 @@ const getters = {
 };
 
 const actions = {
-  registerUser(regUser) {
+  registerUser(newUser) {
     return new Promise((resolve, reject) => {
       axios
-        .post("user", { ...regUser })
+        .post("user", { ...newUser })
         .then((response) => {
           resolve(response);
         })

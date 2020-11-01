@@ -114,28 +114,30 @@ import { mapActions } from "vuex";
 
 export default {
   name: "Register",
-  data: () => ({
-    valid: true,
-    roles: ["Engineer", "Admin"],
-    name: "",
-    email: "",
-    passportNo: "",
-    contactNo: "",
-    state: "",
-    country: "",
-    role: "",
-    password: "",
-    repassword: "",
-    show1: false,
-    show2: false,
-    rules: {
-      required: (value) => !!value || "Required.",
-      min: (v) => v.length >= 8 || "Min 8 characters",
-    },
-    snackbar: false,
-    text: "",
-    loading: false,
-  }),
+  data() {
+    return {
+      valid: true,
+      roles: ["Engineer", "Admin"],
+      name: "",
+      email: "",
+      passportNo: "",
+      contactNo: "",
+      state: "",
+      country: "",
+      role: "",
+      password: "",
+      repassword: "",
+      show1: false,
+      show2: false,
+      rules: {
+        required: (value) => !!value || "Required.",
+        min: (v) => v.length >= 8 || "Min 8 characters",
+      },
+      snackbar: false,
+      text: "",
+      loading: false,
+    };
+  },
   methods: {
     ...mapActions(["registerUser"]),
     submit() {
@@ -151,6 +153,7 @@ export default {
           country: this.country,
           role: this.role,
         };
+        console.log(user);
         this.registerUser(user)
           .then((response) => {
             this.loading = false;
@@ -161,7 +164,6 @@ export default {
           })
           .catch((error) => {
             this.loading = false;
-            console.log(error.response.status);
             this.snackbar = true;
             this.email = "";
             this.passportNo = "";
@@ -170,6 +172,7 @@ export default {
             if (error.response.status === 409) {
               this.text = "User already exits";
             } else {
+              console.log(error);
               this.text = "An Error occured! Try again";
             }
           });

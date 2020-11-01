@@ -9,12 +9,21 @@ const getters = {
 };
 
 const actions = {
-  async fetchEngineers({ commit }) {
-    axios.defaults.headers.common[
-      "Authorization"
-    ] = `Bearer ${localStorage.getItem("access_token")}`;
-    const response = await axios.get("engineer");
-    commit("setEngineers", response.data);
+  fetchEngineers({ commit }) {
+    return new Promise((resolve, reject) => {
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${localStorage.getItem("access_token")}`;
+      axios
+        .get("engineer")
+        .then((response) => {
+          commit("setEngineers", response.data);
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
   },
 };
 

@@ -5,8 +5,6 @@ import Jobs from "../views/Jobs";
 import Engineers from "../views/Engineers";
 import Landing from "../views/Landing";
 import Profile from "../components/Profile";
-// import UpdateUserDetails from "../components/UpdateUserDetails";
-// import UpdatePassword from "../components/UpdatePassword";
 import ProfileUpdate from "../views/ProfileUpdate";
 
 Vue.use(VueRouter);

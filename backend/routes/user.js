@@ -34,6 +34,8 @@ router.post("/", async (req, res) => {
     if (checkUser) return res.status(409).send("User already exits");
 
     const user = new User({ ...req.body });
+    // console.log(user);
+    console.log(req.body);
 
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
