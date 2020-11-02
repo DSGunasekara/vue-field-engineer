@@ -38,11 +38,47 @@ const actions = {
         });
     });
   },
+  deleteJob({ commit, dispatch }, job) {
+    return new Promise((resolve, reject) => {
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${localStorage.getItem("access_token")}`;
+
+      axios
+        .delete(`job/${job}`)
+        .then((response) => {
+          commit("removeJob", job);
+          dispatch("fetchJobs");
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  },
+  updateJob({ dispatch }, job) {
+    return new Promise((resolve, reject) => {
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${localStorage.getItem("access_token")}`;
+      axios
+        .patch(`jobs/${job.id}`, { ...job })
+        .then((response) => {
+          dispatch("fetchJobs");
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  },
 };
 
 const mutations = {
   setJobs: (state, jobs) => (state.jobs = jobs),
   setJob: (state, job) => state.jobs.push(job),
+  removeJob: (state, jobId) =>
+    (state.jobs = state.jobs.filter((job) => job.id !== jobId)),
 };
 
 export default {

@@ -2,7 +2,7 @@
   <div class="dashboard">
     <v-container class="my-5">
       <h1 class="subheading grey--text">Jobs</h1>
-      <AddJob/>
+      <AddJob />
       <v-layout row justify-start class="mb-3">
         <v-tooltip top>
           <template v-slot:activator="{ on }">
@@ -26,7 +26,7 @@
       </v-layout>
 
       <v-card text v-for="(job, index) in allJobs" :key="index">
-        <v-layout row wrap :class="`pa-3 project ${job.status}`">
+        <v-layout row wrap :class="`pa-3 project ml-2 ${job.status}`">
           <v-flex xs12 md2>
             <div class="caption grey--text">Job title</div>
             <div>{{ job.title }}</div>
@@ -41,23 +41,31 @@
             <div class="caption grey--text">Due by</div>
             <div>{{ job.date }}</div>
           </v-flex>
-          <v-flex xs6 sm4 md2>
+          <v-flex xs6 sm4 md1>
             <div class="caption grey--text">Rate for an hour</div>
-            <div>{{ job.rate}}</div>
+            <div>$ {{ job.rate }}</div>
           </v-flex>
-          <v-flex xs6 sm4 md2>
+          <v-flex xs6 sm4 md1>
             <div class="caption grey--text">Required no of Engineers</div>
-            <div>{{ job.requiredEngineers}}</div>
+            <div>{{ job.requiredEngineers }}</div>
           </v-flex>
 
-          <v-flex xs2 sm4 md2>
-            <div class="right">
-              <v-chip
-                small
-                :class="`${job.status} white--text my-2 caption`"
-                >{{ job.status }}</v-chip
-              >
+          <v-flex xs2 sm4 md1>
+            <div class="right ml-5">
+              <v-chip small :class="`white--text my-2 caption ${job.status}`">{{
+                job.status
+              }}</v-chip>
             </div>
+          </v-flex>
+          <v-flex xs6 sm4 md1>
+            <v-btn text class="grey--text">
+              <v-icon>mdi-file-edit-outline</v-icon> edit</v-btn
+            >
+          </v-flex>
+          <v-flex xs6 sm4 md1>
+            <v-btn text class="grey--text" @click="removeJob(job._id)"
+              ><v-icon>mdi-delete</v-icon> Delete</v-btn
+            >
           </v-flex>
         </v-layout>
         <v-divider></v-divider>
@@ -67,22 +75,31 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
-import AddJob from '../components/AddJob'
+import { mapActions, mapGetters } from "vuex";
+import AddJob from "../components/AddJob";
 export default {
-  components:{
-    AddJob
+  components: {
+    AddJob,
   },
   methods: {
-    ...mapActions(["fetchJobs"]),
+    ...mapActions(["fetchJobs", "deleteJob"]),
     sortBy(prop) {
       this.projects = this.projects.sort((a, b) =>
         a[prop] < b[prop] ? -1 : 1
       );
     },
+    removeJob(id) {
+      this.deleteJob(id)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    },
   },
-  computed:{
-    ...mapGetters(["allJobs"]),
+  computed: {
+    ...mapGetters(["allJobs", "getProfile"]),
+    role() {
+      //FIXME: adding must be restricted
+      return this.getProfile.role;
+    },
   },
   created() {
     this.fetchJobs()
@@ -100,7 +117,7 @@ export default {
 .project.complete {
   border-left: 4px solid #3cd1c2;
 }
-.project.ongoing {
+.project.pending {
   border-left: 4px solid #ffaa2c;
 }
 .project.overdue {
@@ -109,7 +126,7 @@ export default {
 .v-chip.complete {
   background: #3cd1c2;
 }
-.v-chip.ongoing {
+.v-chip.pending {
   background: #ffaa2c;
 }
 .v-chip.overdue {

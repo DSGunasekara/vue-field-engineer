@@ -161,7 +161,7 @@ export default {
             console.log(response);
             this.snackbar = true;
             this.text = "User registerd";
-            this.$router.push({ name: "Home" });
+            this.$router.push({ name: "landing" });
           })
           .catch((error) => {
             this.loading = false;
