@@ -143,7 +143,7 @@ export default {
     submit() {
       if (this.$refs.form.validate()) {
         this.loading = true;
-        const user = {
+        const newUser = {
           name: this.name,
           email: this.email,
           password: this.password,
@@ -153,8 +153,9 @@ export default {
           country: this.country,
           role: this.role,
         };
-        console.log(user);
-        this.registerUser(user)
+        console.log(newUser);
+
+        this.registerUser(newUser)
           .then((response) => {
             this.loading = false;
             console.log(response);
@@ -176,6 +177,7 @@ export default {
               this.text = "An Error occured! Try again";
             }
           });
+        // this.registerUser(newUser);
       }
     },
   },
