@@ -1,8 +1,10 @@
 <template>
+  <!-- FIXME:Date need to fixed -->
   <div class="dashboard">
     <v-container class="my-5">
       <h1 class="subheading grey--text">Jobs</h1>
       <AddJob />
+      <!-- TODO: make this a modal  -->
       <v-layout row justify-start class="mb-3">
         <v-tooltip top>
           <template v-slot:activator="{ on }">
@@ -58,9 +60,10 @@
             </div>
           </v-flex>
           <v-flex xs6 sm4 md1>
-            <v-btn text class="grey--text">
+            <!-- <v-btn text class="grey--text">
               <v-icon>mdi-file-edit-outline</v-icon> edit</v-btn
-            >
+            > -->
+            <UpdateJob v-bind:job="job" />
           </v-flex>
           <v-flex xs6 sm4 md1>
             <v-btn text class="grey--text" @click="removeJob(job._id)"
@@ -76,19 +79,25 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+
 import AddJob from "../components/AddJob";
+import UpdateJob from "../components/UpdateJob";
+
 export default {
   components: {
     AddJob,
+    UpdateJob,
   },
   methods: {
     ...mapActions(["fetchJobs", "deleteJob"]),
     sortBy(prop) {
+      //TODO: srting need to updated
       this.projects = this.projects.sort((a, b) =>
         a[prop] < b[prop] ? -1 : 1
       );
     },
     removeJob(id) {
+      //TODO: create a modal to asking agree to delete
       this.deleteJob(id)
         .then((res) => console.log(res))
         .catch((err) => console.log(err));

@@ -62,7 +62,7 @@ const actions = {
         "Authorization"
       ] = `Bearer ${localStorage.getItem("access_token")}`;
       axios
-        .patch(`jobs/${job.id}`, { ...job })
+        .patch(`job/${job.id}`, { ...job })
         .then((response) => {
           dispatch("fetchJobs");
           resolve(response);
