@@ -72,6 +72,22 @@ const actions = {
         });
     });
   },
+  acceptJob({ dispatch }, job){
+    return new Promise((resolve, reject)=>{
+      console.log(job)
+      axios.defaults.headers.common[
+          "Authorization"
+          ] = `Bearer ${localStorage.getItem("access_token")}`;
+      axios
+          .patch(`job/addEngineer/${job.id}`, {...job})
+          .then((response)=>{
+            dispatch("fetchJobs")
+            resolve(response)
+          }).catch((error)=>{
+            reject(error)
+      })
+    })
+  }
 };
 
 const mutations = {

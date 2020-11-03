@@ -25,7 +25,7 @@
         </v-tooltip>
       </v-layout>
 
-      <v-card text v-for="(job, index) in allJobs" :key="index">
+      <v-card text v-for="(job, index) in availableJobs" :key="index">
         <v-layout row wrap :class="`pa-3 project ml-2 ${job.status}`">
           <v-flex xs12 md2>
             <div class="caption grey--text">Job title</div>
@@ -47,7 +47,7 @@
           </v-flex>
           <v-flex xs6 sm4 md1>
             <div class="caption grey--text">Required no of Engineers</div>
-            <div>{{ job.requiredEngineers }}</div>
+            <div>{{ job.assignedEngineers.length }} / {{ job.requiredEngineers }}</div>
           </v-flex>
 
           <v-flex xs2 sm4 md1>
@@ -61,14 +61,23 @@
             </div>
           </v-flex>
           <v-flex xs6 sm4 md1>
-            <v-btn text class="grey--text" @click="acceptJob(job._id)"
-              ><v-icon>mdi-{{ check }}</v-icon> Get Job</v-btn
-            >
+              <v-btn text class="grey--text" @click="joinJob(job._id)"
+                ><v-icon>mdi-{{ check }}</v-icon> Get Job</v-btn
+              >
           </v-flex>
         </v-layout>
         <v-divider></v-divider>
       </v-card>
     </v-container>
+    <v-snackbar top v-model="snackbar">
+      {{ text }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn color="pink" text v-bind="attrs" @click="snackbar = false" :loading="loading"
+        >Close</v-btn
+        >
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -79,23 +88,38 @@ export default {
   data() {
     return {
       check: "check",
+      snackbar: false,
+      loading: false,
+      text: '',
     };
   },
   methods: {
-    ...mapActions(["fetchJobs", "updateJob"]),
+    ...mapActions(["fetchJobs", "acceptJob"]),
     sortBy(prop) {
       //TODO: starting need to updated
       this.projects = this.projects.sort((a, b) =>
         a[prop] < b[prop] ? -1 : 1
       );
     },
-    acceptJob(id){
-      console.log(id);
+    joinJob(jobId){
+      this.loading =  true
+      console.log(jobId);
       console.log(this.getProfile._id);
-      this.updateJob(id)
+      const newJob = {
+        id: jobId,
+        engineer: this.getProfile._id
+      }
+
+      this.acceptJob(newJob)
       .then((res)=>{
+        this.loading = false
+        this.snackbar = true
+        this.text = "Assigned to the job"
         console.log(res)
       }).catch((err)=>{
+        this.loading = false
+        this.snackbar = true
+        this.text = "An error occurred"
         console.log(err)
       })
     }
@@ -105,6 +129,10 @@ export default {
     role() {
       return this.getProfile.role;
     },
+    availableJobs(){
+      return this.allJobs.filter((job)=>job.status !== 'Assigned')
+    }
+
   },
   created() {
     this.fetchJobs()
@@ -119,22 +147,22 @@ export default {
 </script>
 
 <style>
-.project.complete {
-  border-left: 4px solid #3cd1c2;
-}
-.project.pending {
-  border-left: 4px solid #ffaa2c;
-}
-.project.overdue {
-  border-left: 4px solid #f83e70;
-}
-.v-chip.complete {
-  background: #3cd1c2;
-}
-.v-chip.pending {
-  background: #ffaa2c;
-}
-.v-chip.overdue {
-  background: #f83e70;
-}
+/*.project.complete {*/
+/*  border-left: 4px solid #3cd1c2;*/
+/*}*/
+/*.project.pending {*/
+/*  border-left: 4px solid #ffaa2c;*/
+/*}*/
+/*.project.overdue {*/
+/*  border-left: 4px solid #f83e70;*/
+/*}*/
+/*.v-chip.complete {*/
+/*  background: #3cd1c2;*/
+/*}*/
+/*.v-chip.pending {*/
+/*  background: #ffaa2c;*/
+/*}*/
+/*.v-chip.overdue {*/
+/*  background: #f83e70;*/
+/*}*/
 </style>

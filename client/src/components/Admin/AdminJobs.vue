@@ -48,8 +48,8 @@
             <div>$ {{ job.rate }}</div>
           </v-flex>
           <v-flex xs6 sm4 md1>
-            <div class="caption grey--text">Required no of Engineers</div>
-            <div>{{ job.requiredEngineers }}</div>
+            <div class="caption grey--text">Needed Engineers</div>
+            <div>{{ job.assignedEngineers.length }} / {{ job.requiredEngineers }}</div>
           </v-flex>
 
           <v-flex xs2 sm4 md1>

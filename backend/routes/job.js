@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Job = require("../models/Job");
 const Engineer = require("../models/Engineer");
+const User = require("../models/User")
 
 //get all jobs
 router.get("/", async (req, res) => {
@@ -71,10 +72,22 @@ router.patch("/:id", async (req, res) => {
 router.patch("/addEngineer/:id", async (req, res)=>{
   try{
     const job = await Job.findOne({ _id: req.params.id});
-    if(!job) return res.status(404).send("Job does not exits")
+    if(!job){
+      console.log('job')
+      return res.status(404).send("Job does not exits")
+    }
 
-    const engineer = await Engineer.findOne({ _id: req.body.engineer})
-    if(!engineer) return res.status(404).send("Engineer does not exits")
+    const user = await User.findOne({ _id: req.body.engineer})
+    if(!user){
+      console.log('user')
+      return res.status(404).send("No user found")
+    }
+
+    const engineer = await Engineer.findOne({ user: user._id})
+    if(!engineer){
+      console.log('engineer')
+      return res.status(404).send("Engineer does not exits")
+    }
 
     if(engineer.availability === false) return res.status(400).send("Engineer availability is set to unavailable")
 
@@ -86,6 +99,9 @@ router.patch("/addEngineer/:id", async (req, res)=>{
       console.log(engineer)
         const engineerId = engineer._id
         job.assignedEngineers.push(engineerId)
+        if(job.requiredEngineers === job.assignedEngineers.length){
+          job.status = 'Assigned'
+        }
         await job.save()
         return res.status(200).send("Engineer added to the job")
     }else {
@@ -108,6 +124,7 @@ router.patch("/removeEngineer/:id", async (req, res)=>{
 
     //Removes the engineers from the array
     await Job.updateOne( {_id: req.params.id}, { $pullAll: {assignedEngineers: [req.body.engineer] } } )
+    job.status = 'Pending'
 
     return res.status(200).send("Job was updated")
 
