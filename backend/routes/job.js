@@ -58,15 +58,45 @@ router.patch("/:id", async (req, res) => {
   try {
     const job = await Job.findOne({ _id: req.params.id });
     if (!job) return res.status(404).send("Job does not exits");
-    // if(job.requiredEngineers <= job.assignedEngineers.length)
-    console.log(job.assignedEngineers.length, job.requiredEngineers)
-    // await Job.updateOne({ _id: req.params.id }, req.body);
+    if(job.requiredEngineers <= job.assignedEngineers.length)
+    await Job.updateOne({ _id: req.params.id }, req.body);
     //TODO: update engineer job list history
     return res.status(200).send("Job updated");
   } catch (error) {
     return res.status(500).send(error);
   }
 });
+
+//add a engineer to the job
+router.patch("/addEngineer/:id", async (req, res)=>{
+  try{
+    const job = await Job.findOne({ _id: req.params.id});
+    if(!job) return res.status(404).send("Job does not exits")
+
+    const engineer = await Engineer.findOne({ _id: req.body.engineer})
+    if(!engineer) return res.status(404).send("Engineer does not exits")
+
+    const checkEngineer = await Job.findOne({assignedEngineers: req.body.engineer})
+    if(checkEngineer) return res.status(409).send("Engineer already assigned")
+
+    console.log(job.assignedEngineers.length, job.requiredEngineers)
+    if(job.requiredEngineers > job.assignedEngineers.length){
+      console.log(engineer)
+        const engineerId = engineer._id
+        job.assignedEngineers.push(engineerId)
+        await job.save()
+        return res.status(200).send("Engineer added to the job")
+    }else {
+      return res.status(400).send("Engineer required amount is full")
+    }
+    // return res.status(200).send("ok")
+
+  }catch (error){
+    console.log(error)
+    return res.status(500).send(error)
+  }
+})
+
 
 //delete a job
 router.delete("/:id", async (req, res) => {

@@ -16,7 +16,7 @@
         <v-card text class="ma-3">
           <v-responsive class="pt-4 mx-4">
             <v-avatar center size="100" class="grey lighten-2">
-              <img src="../assets/profile.jpg" />
+              <img src="../assets/profile.jpg"  alt="profile"/>
             </v-avatar>
           </v-responsive>
           <v-card-text>
@@ -32,12 +32,12 @@
               {{ engineer.rate }}
             </div>
             <div :class="`${engineer.availability} `">
-              <v-icon v-if="engineer.availability == true" small left
+              <v-icon v-if="engineer.availability === true" small left
                 >mdi-check</v-icon
               >
               <v-icon v-else small left>mdi-window-close</v-icon>
               {{
-                engineer.availability == true ? "Available" : "Not Available"
+                engineer.availability === true ? "Available" : "Not Available"
               }}
             </div>
           </v-card-text>
@@ -80,10 +80,10 @@ export default {
 </script>
 
 <style>
-.true {
-  color: #00c853;
-}
-.false {
-  color: #e53935;
-}
+/*.true {*/
+/*  color: #00c853;*/
+/*}*/
+/*.false {*/
+/*  color: #e53935;*/
+/*}*/
 </style>
