@@ -58,7 +58,9 @@ router.patch("/:id", async (req, res) => {
   try {
     const job = await Job.findOne({ _id: req.params.id });
     if (!job) return res.status(404).send("Job does not exits");
-    await Job.updateOne({ _id: req.params.id }, req.body);
+    // if(job.requiredEngineers <= job.assignedEngineers.length)
+    console.log(job.assignedEngineers.length, job.requiredEngineers)
+    // await Job.updateOne({ _id: req.params.id }, req.body);
     //TODO: update engineer job list history
     return res.status(200).send("Job updated");
   } catch (error) {
@@ -73,10 +75,10 @@ router.delete("/:id", async (req, res) => {
     if (!job) return res.status(404).send("Job does not exits");
     await job.remove(async (error, _) => {
       if (error) return res.status(400).send(error);
-      if (job.engineer) {
+    /*  if (job.engineer) {
         const engineer = await Engineer.findOne({ _id: job.engineer });
         engineer.jobList.remove(job);
-      }
+      }*/
       return res.status(200).send("Job deleted");
     });
   } catch (error) {

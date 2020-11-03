@@ -89,7 +89,7 @@ export default {
           console.log(res);
           this.loading = false;
           this.snackbar = true;
-          this.text = "Logged In sucessfully";
+          this.text = "Logged In successfully";
           this.$router.push("/engineers");
         })
         .catch((error) => {

@@ -89,7 +89,16 @@ export default {
         a[prop] < b[prop] ? -1 : 1
       );
     },
-    // acceptJob(id)
+    acceptJob(id){
+      console.log(id);
+      console.log(this.getProfile._id);
+      this.updateJob(id)
+      .then((res)=>{
+        console.log(res)
+      }).catch((err)=>{
+        console.log(err)
+      })
+    }
   },
   computed: {
     ...mapGetters(["allJobs", "getProfile"]),
