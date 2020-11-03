@@ -14,11 +14,17 @@ const routes = [
     path: "/",
     name: "home",
     component: Home,
+    meta: {
+      requireAuth: true,
+    },
   },
   {
     path: "/jobs",
     name: "jobs",
     component: Jobs,
+    meta: {
+      requireAuth: true,
+    },
   },
   {
     path: "/landing",
