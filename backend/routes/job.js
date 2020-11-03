@@ -89,7 +89,24 @@ router.patch("/addEngineer/:id", async (req, res)=>{
     }else {
       return res.status(400).send("Engineer required amount is full")
     }
-    // return res.status(200).send("ok")
+  }catch (error){
+    console.log(error)
+    return res.status(500).send(error)
+  }
+})
+
+//remove an engineer from a job
+router.patch("/removeEngineer/:id", async (req, res)=>{
+  try {
+    const job = await Job.findOne({_id: req.params.id})
+    if(!job) return res.status(404).send("Job does not exits")
+
+    const engineer = await Engineer.findOne({_id: req.body.engineer})
+    if(!engineer) return res.status(404).send("Engineer does not exits")
+
+    await Job.updateOne( {_id: req.params.id}, { $pullAll: {assignedEngineers: [req.body.engineer] } } )
+
+    return res.status(200).send("Job was updated")
 
   }catch (error){
     console.log(error)
