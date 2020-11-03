@@ -76,6 +76,8 @@ router.patch("/addEngineer/:id", async (req, res)=>{
     const engineer = await Engineer.findOne({ _id: req.body.engineer})
     if(!engineer) return res.status(404).send("Engineer does not exits")
 
+    if(engineer.availability === false) return res.status(400).send("Engineer availability is set to unavailable")
+
     const checkEngineer = await Job.findOne({assignedEngineers: req.body.engineer})
     if(checkEngineer) return res.status(409).send("Engineer already assigned")
 
@@ -104,6 +106,7 @@ router.patch("/removeEngineer/:id", async (req, res)=>{
     const engineer = await Engineer.findOne({_id: req.body.engineer})
     if(!engineer) return res.status(404).send("Engineer does not exits")
 
+    //Removes the engineers from the array
     await Job.updateOne( {_id: req.params.id}, { $pullAll: {assignedEngineers: [req.body.engineer] } } )
 
     return res.status(200).send("Job was updated")
@@ -122,10 +125,7 @@ router.delete("/:id", async (req, res) => {
     if (!job) return res.status(404).send("Job does not exits");
     await job.remove(async (error, _) => {
       if (error) return res.status(400).send(error);
-    /*  if (job.engineer) {
-        const engineer = await Engineer.findOne({ _id: job.engineer });
-        engineer.jobList.remove(job);
-      }*/
+
       return res.status(200).send("Job deleted");
     });
   } catch (error) {
