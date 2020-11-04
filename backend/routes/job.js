@@ -125,6 +125,7 @@ router.patch("/removeEngineer/:id", async (req, res)=>{
     //Removes the engineers from the array
     await Job.updateOne( {_id: req.params.id}, { $pullAll: {assignedEngineers: [req.body.engineer] } } )
     job.status = 'Pending'
+    await job.save()
 
     return res.status(200).send("Job was updated")
 

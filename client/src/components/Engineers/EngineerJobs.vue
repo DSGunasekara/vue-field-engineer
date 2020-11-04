@@ -130,7 +130,7 @@ export default {
       return this.getProfile.role;
     },
     availableJobs(){
-      return this.allJobs.filter((job)=>job.status !== 'Assigned')
+      return this.allJobs.filter((job)=>job.status === 'Pending')
     }
 
   },
