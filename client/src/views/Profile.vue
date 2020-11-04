@@ -6,7 +6,8 @@
                     <UserDetails/>
                 </v-col>
                 <v-col cols="12" md="8">
-                    <v-card >Job list</v-card>
+<!--                    <v-card >Job list</v-card>-->
+                    <ProfileJobs/>
                 </v-col>
             </v-row>
             
@@ -15,12 +16,14 @@
 
 <script>
 
-import UserDetails from './UserDetails'
+import UserDetails from '../components/UserDetails'
+import ProfileJobs from "@/components/Engineers/ProfileJobs";
 
 export default {
     name:"Profile",
     components:{
-        UserDetails
+        UserDetails,
+        ProfileJobs
     }
 }
 </script>

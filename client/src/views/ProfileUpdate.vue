@@ -14,7 +14,7 @@
     </v-row>
     <v-row class="justify-center">
       <v-col col="12" md="6">
-        <div v-if="user == true">
+        <div v-if="user === true">
           <UpdateUserDetails />
         </div>
         <div v-else>

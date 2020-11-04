@@ -14,7 +14,7 @@
   - [-] Job Management Window
     - [-] Due Today
     - [-] Happening Now
-    - [-] Happening Tommorow
+    - [-] Happening Tomorrow
     - [-] Confirmed
   - [-] Pending Job Window
     - [-] Urgent
@@ -26,6 +26,10 @@
   - [-] Job location view
   - [-] Field Engineer Management
     - [x] Profile
+    - [-] Engineer Job list
+    - [x] Assigning the job
+    - [-] Leaving a job
+    - [-] Changing the state of the job
     - [-] Rating
   - [-] Customer
   - [-] Job Management

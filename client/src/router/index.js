@@ -4,7 +4,7 @@ import Home from "../views/Home.vue";
 import Jobs from "../views/Jobs";
 import Engineers from "../views/Engineers";
 import Landing from "../views/Landing";
-import Profile from "../components/Profile";
+import Profile from "../views/Profile";
 import ProfileUpdate from "../views/ProfileUpdate";
 
 Vue.use(VueRouter);

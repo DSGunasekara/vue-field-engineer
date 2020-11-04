@@ -94,7 +94,6 @@ router.patch("/addEngineer/:id", async (req, res)=>{
     const checkEngineer = await Job.findOne({assignedEngineers: req.body.engineer})
     if(checkEngineer) return res.status(409).send("Engineer already assigned")
 
-    console.log(job.assignedEngineers.length, job.requiredEngineers)
     if(job.requiredEngineers > job.assignedEngineers.length){
       console.log(engineer)
         const engineerId = engineer._id
