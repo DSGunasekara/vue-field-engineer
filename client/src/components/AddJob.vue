@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="right">
+  <v-row>
     <v-dialog v-model="dialog" max-width="600px">
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="grey" text dark v-bind="attrs" v-on="on" class="my-5"> <v-icon>mdi-plus-circle</v-icon> Add a job </v-btn>
@@ -15,8 +15,11 @@
                 <v-text-field v-model="title" label="Job Title" required></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field v-model="date" label="Date" type="date"></v-text-field>
+                <v-text-field v-model="date" label="Date" type="datetime-local"></v-text-field>
               </v-col>
+<!--              <v-col cols="12">-->
+<!--                <v-text-field v-model="startTime" label="Start Time" type="time"></v-text-field>-->
+<!--              </v-col>-->
               <v-col cols="12">
                 <v-text-field v-model="location" label="Location"></v-text-field>
               </v-col>
@@ -71,6 +74,7 @@ export default {
     // selectItems: null
     title: '',
     date:'',
+    // startTime: '',
     location: '',
     description:'',
     lconName:'',
@@ -85,14 +89,16 @@ export default {
       const job = {
         title: this.title,
         date: this.date,
+        // startTime: this.startTime,
         location: this.location,
         description: this.description,
         lconName: this.lconName,
         lconContactNo: this.title,
         rate: this.rate,
         requiredEngineers: this.requiredEngineers,
-        status: 'pending'
+        status: 'Pending'
       }
+      console.log(job)
       this.addJob(job)
       .then((res)=>{
         console.log(res);

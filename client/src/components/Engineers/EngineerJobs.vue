@@ -39,7 +39,7 @@
 
           <v-flex xs6 sm4 md2>
             <div class="caption grey--text">Due by</div>
-            <div>{{ job.date }}</div>
+            <div>{{ job.date | moment }}</div>
           </v-flex>
           <v-flex xs6 sm4 md1>
             <div class="caption grey--text">Rate for an hour</div>
@@ -83,6 +83,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import moment from "moment";
 
 export default {
   data() {
@@ -143,6 +144,11 @@ export default {
         console.log(error);
       });
   },
+  filters: {
+    moment: function (date) {
+      return moment(date).format('MMMM Do YYYY, h:mm:ss a');
+    }
+  }
 };
 </script>
 

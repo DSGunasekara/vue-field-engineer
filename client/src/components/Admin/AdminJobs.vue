@@ -41,7 +41,7 @@
 
           <v-flex xs6 sm4 md2>
             <div class="caption grey--text">Due by</div>
-            <div>{{ job.date }}</div>
+            <div>{{ job.date | moment }}</div>
           </v-flex>
           <v-flex xs6 sm4 md1>
             <div class="caption grey--text">Rate for an hour</div>
@@ -82,6 +82,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import moment from 'moment'
 
 import AddJob from "../AddJob";
 import UpdateJob from "../UpdateJob";
@@ -106,6 +107,9 @@ export default {
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
     },
+    // moment: function () {
+    //   return moment();
+    // }
   },
   computed: {
     ...mapGetters(["allJobs", "getProfile"]),
@@ -113,6 +117,11 @@ export default {
       //FIXME: adding must be restricted
       return this.getProfile.role;
     },
+  },
+  filters: {
+    moment: function (date) {
+      return moment(date).format('MMMM Do YYYY, h:mm:ss a');
+    }
   },
   created() {
     this.fetchJobs()
@@ -127,19 +136,19 @@ export default {
 </script>
 
 <style>
-.project.complete {
+.project.Assigned {
   border-left: 4px solid #3cd1c2;
 }
-.project.pending {
+.project.Pending {
   border-left: 4px solid #ffaa2c;
 }
 .project.overdue {
   border-left: 4px solid #f83e70;
 }
-.v-chip.complete {
+.v-chip.Assigned {
   background: #3cd1c2;
 }
-.v-chip.pending {
+.v-chip.Pending {
   background: #ffaa2c;
 }
 .v-chip.overdue {

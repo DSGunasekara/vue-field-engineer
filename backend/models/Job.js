@@ -8,6 +8,9 @@ const JobSchema = new mongoose.Schema({
     type: Date,
     require: true,
   },
+  endTime:{
+    type: Date,
+  },
   status: {
     type: String,
     required: true,

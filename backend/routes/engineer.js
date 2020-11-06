@@ -1,5 +1,7 @@
 const router = require("express").Router();
 const Engineer = require("../models/Engineer");
+const Job = require("../models/Job");
+
 const verify = require("../middleware/verify");
 
 //get all engineers
@@ -26,7 +28,6 @@ router.get("/:id", async (req, res) => {
     await Engineer.findOne({ _id: req.params.id })
       .select("-password")
       .populate("user")
-      .populate("jobList")
       .exec()
       .then((engineer, error) => {
         if (error) return res.status(400).send(error);
@@ -36,6 +37,22 @@ router.get("/:id", async (req, res) => {
     return res.status(500).send(error);
   }
 });
+
+//get engineers job list
+router.get("/jobList/:id", async (req, res)=>{
+  try{
+    await Job.find({assignedEngineers: req.params.id})
+        .populate("assignedEngineers")
+        .exec()
+        .then((jobs, error)=>{
+          if(error) return res.status(400).send(error)
+          return res.status(200).send(jobs)
+        })
+  }catch (error){
+    console.log(error)
+    return res.status(500).send(error)
+  }
+})
 
 //add an engineer
 router.post("/:id", async (req, res) => {

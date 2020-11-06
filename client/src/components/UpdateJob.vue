@@ -24,7 +24,7 @@
                 <v-text-field
                   v-model="job.date"
                   label="Date"
-                  type="date"
+                  type="datetime-local"
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
