@@ -41,7 +41,7 @@ router.get("/:id", async (req, res) => {
 //get engineers job list
 router.get("/jobList/:id", async (req, res)=>{
   try{
-    const engineer = await Engineer.findOne({user: {_id: req.params.id}})
+    const engineer = await Engineer.findOne({user: req.params.id})
     console.log(engineer)
     await Job.find({assignedEngineers: engineer})
         .populate("assignedEngineers")
