@@ -1,5 +1,4 @@
 <template>
-  <!-- FIXME:Date need to fixed -->
   <div class="dashboard">
     <v-container class="my-5">
       <h1 class="subheading grey--text">Jobs</h1>
