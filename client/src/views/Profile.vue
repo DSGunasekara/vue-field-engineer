@@ -7,8 +7,8 @@
                 </v-col>
                 <v-col cols="12" md="8">
 <!--                    <v-card >Job list</v-card>-->
-                    <Calendar/>
-<!--                    <ProfileJobs/>-->
+<!--                    <Calendar/>-->
+                    <ProfileJobs/>
                 </v-col>
             </v-row>
 
@@ -18,15 +18,15 @@
 <script>
 
 import UserDetails from '../components/UserDetails'
-// import ProfileJobs from "@/components/Engineers/ProfileJobs";
-import Calendar from "@/components/Calendar";
+import ProfileJobs from "@/components/Engineers/ProfileJobs";
+// import Calendar from "@/components/Calendar";
 
 export default {
     name:"Profile",
     components:{
         UserDetails,
-        // ProfileJobs,
-       Calendar
+        ProfileJobs,
+       // Calendar
     }
 }
 </script>

@@ -60,7 +60,12 @@ export default {
     ...mapGetters(["getProfile"]),
   },
   created() {
-    this.getUser();
+    this.getUser().then((res)=>{
+      console.log(res)
+    })
+    .catch((err)=>{
+      console.log(err)
+    });
   },
 };
 </script>

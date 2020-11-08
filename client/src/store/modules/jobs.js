@@ -2,12 +2,12 @@ import axios from "axios";
 
 const state = {
   jobs: [],
-  engineerJobs: []
+    engineerJobList: []
 };
 
 const getters = {
   allJobs: (state) => state.jobs,
-  getEngineerJobs: (state) => state.engineerJobs,
+  allEngineerJobList: (state)=> state.engineerJobList,
 };
 
 const actions = {
@@ -90,21 +90,22 @@ const actions = {
       })
     })
   },
-  fetchEngineerJobList({ commit, state }){
+  fetchEngineerJobList({ commit }, userId){
     return new Promise((resolve, reject)=>{
+        console.log(`id ${userId}`)
       axios.defaults.headers.common[
           "Authorization"
           ] = `Bearer ${localStorage.getItem("access_token")}`;
-
-      axios
-          .get(`engineer/jobList/${state.profile._id}`)
+      axios.get(`engineer/jobList/${userId}`)
           .then((response)=>{
-            console.log(`hello ${response.data}`)
-            commit("setEngineerJobList", response.data)
-            response(response)
-          }).catch((error)=>{
-            reject(error)
-      })
+              console.log(response)
+            commit("EngineerJobList", response.data)
+            resolve(response)
+          })
+          .catch((err)=>{
+            console.log(err)
+            reject(err)
+          })
     })
   }
 };
@@ -114,7 +115,7 @@ const mutations = {
   setJob: (state, job) => state.jobs.push(job),
   removeJob: (state, jobId) =>
     (state.jobs = state.jobs.filter((job) => job.id !== jobId)),
-  setEngineerJobList: (state, jobList) => (state.engineerJobs = jobList)
+  EngineerJobList: (state, jobList) => state.engineerJobList = jobList
 };
 
 export default {
