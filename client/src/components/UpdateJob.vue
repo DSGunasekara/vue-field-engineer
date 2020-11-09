@@ -98,7 +98,7 @@ export default {
         location: this.job.location,
         description: this.job.description,
         lconName: this.job.lconName,
-        lconContactNo: this.job.title,
+        lconContactNo: this.job.lconContactNo,
         rate: this.job.rate,
         requiredEngineers: this.job.requiredEngineers,
       };

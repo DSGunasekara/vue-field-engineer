@@ -88,6 +88,12 @@ router.patch("/addEngineer/:id", async (req, res)=>{
       console.log('engineer')
       return res.status(404).send("Engineer does not exits")
     }
+    const jobList = await Job.find({assignedEngineers: engineer, date: job.date})
+    if(jobList.length !== 0 ){
+      console.log(jobList.length)
+      return res.status(409).send("Engineer job date conflict")
+    }
+
 
     if(engineer.availability === false) return res.status(400).send("Engineer availability is set to unavailable")
 
