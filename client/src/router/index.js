@@ -31,7 +31,10 @@ const routes = [
     path: "/job/:id",
     name: "User Job",
     component: Job,
-    props:true
+    props: true,
+    meta: {
+      requireAuth: true,
+    },
   },
   {
     path: "/landing",

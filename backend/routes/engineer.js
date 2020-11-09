@@ -44,7 +44,14 @@ router.get("/jobList/:id", async (req, res)=>{
     const engineer = await Engineer.findOne({user: req.params.id})
     console.log(engineer)
     await Job.find({assignedEngineers: engineer})
-        .populate("assignedEngineers")
+        // .populate("assignedEngineers")
+        // .populate({path: "user"})
+        .populate({
+          path: "assignedEngineers",
+          populate:{
+            path: "user"
+          }
+        })
         .exec()
         .then((jobs, error)=>{
           if(error) return res.status(400).send(error)
