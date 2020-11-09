@@ -2,7 +2,7 @@ import axios from "axios";
 
 const state = {
   jobs: [],
-    engineerJobList: []
+  engineerJobList: []
 };
 
 const getters = {

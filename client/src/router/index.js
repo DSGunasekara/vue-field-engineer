@@ -6,6 +6,7 @@ import Engineers from "../views/Engineers";
 import Landing from "../views/Landing";
 import Profile from "../views/Profile";
 import ProfileUpdate from "../views/ProfileUpdate";
+import Job from "@/components/Job";
 
 Vue.use(VueRouter);
 
@@ -25,6 +26,12 @@ const routes = [
     meta: {
       requireAuth: true,
     },
+  },
+  {
+    path: "/job/:id",
+    name: "User Job",
+    component: Job,
+    props:true
   },
   {
     path: "/landing",

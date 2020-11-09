@@ -107,13 +107,13 @@ export default {
           console.log(response);
           this.loading = false;
           this.snackbar = true;
-          this.text = "user updated succusfully";
+          this.text = "user updated successfully";
         })
         .catch((error) => {
           console.log(error);
           this.loading = false;
           this.snackbar = true;
-          this.text = "An error occured";
+          this.text = "An error occurred";
         });
     },
     cancel() {

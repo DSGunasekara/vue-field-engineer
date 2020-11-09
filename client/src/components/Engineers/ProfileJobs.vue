@@ -32,16 +32,13 @@
               <v-chip small :class="`white--text my-2 caption ${job.status}`">{{
                   job.status
                 }}</v-chip>
-              <!-- <div :class="`${job.status}`">
-                {{ job.status }}
-              </div> -->
             </div>
           </v-flex>
-<!--          <v-flex xs6 sm4 md1>-->
-<!--            <v-btn text class="grey&#45;&#45;text" @click="joinJob(job._id)"-->
-<!--            ><v-icon>mdi-{{ check }}</v-icon> Get Job</v-btn-->
-<!--            >-->
-<!--          </v-flex>-->
+          <v-flex xs6 sm4 md1>
+            <v-btn text class="grey--text" @click="viewJob(job._id)"
+            ><v-icon>mdi-eye</v-icon> View</v-btn
+            >
+          </v-flex>
         </v-layout>
         <v-divider></v-divider>
       </v-card>
@@ -65,7 +62,11 @@ import moment from "moment";
 export default {
   name: "ProfileJobs",
   methods:{
-    ...mapActions(["fetchEngineerJobList"])
+    ...mapActions(["fetchEngineerJobList"]),
+    viewJob(jobId){
+      console.log(jobId)
+      this.$router.push(`/job/${jobId}`)
+    }
   },
   mounted() {
     console.log(`hello ${this.getProfile._id}`)
@@ -84,7 +85,7 @@ export default {
     moment: function (date) {
       return moment(date).format('MMMM Do YYYY, h:mm:ss a');
     }
-  }
+  },
 }
 </script>
 
