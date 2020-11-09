@@ -88,7 +88,17 @@ router.patch("/addEngineer/:id", async (req, res)=>{
       console.log('engineer')
       return res.status(404).send("Engineer does not exits")
     }
-    const jobList = await Job.find({assignedEngineers: engineer, date: job.date})
+
+    const jobDate = job.date.toISOString().substr(0,10)
+    const endDate = new Date(jobDate)
+    let day = jobDate.substr(8,10)
+    console.log(day)
+    endDate.setDate(parseInt(day) + 1)
+    console.log(jobDate)
+    console.log(endDate)
+
+    const jobList = await Job.find({assignedEngineers: engineer, date: {$gte: jobDate, $lt: endDate.toISOString().substr(0,10)}})
+    console.log(jobList)
     if(jobList.length !== 0 ){
       console.log(jobList.length)
       return res.status(409).send("Engineer job date conflict")

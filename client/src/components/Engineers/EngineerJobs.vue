@@ -119,8 +119,12 @@ export default {
       }).catch((err)=>{
         this.loading = false
         this.snackbar = true
-        this.text = "An error occurred"
-        console.log(err)
+        if(err.response.status === 409){
+          this.text = "You already has a job on this day"
+        }else{
+          this.text = "An error occurred"
+        }
+        console.log(err.response.status)
       })
     }
   },
