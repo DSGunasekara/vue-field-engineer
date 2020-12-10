@@ -7,7 +7,12 @@ const User = require("../models/User")
 router.get("/", async (req, res) => {
   try {
     await Job.find({})
-      .populate("assignedEngineers")
+      .populate({
+        path: "assignedEngineers",
+        populate:{
+          path: "user"
+        }
+      })
       .exec()
       .then((jobs, error) => {
         if (error) return res.status(400).send(error);
