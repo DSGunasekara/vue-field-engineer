@@ -10,7 +10,8 @@ router.get("/", async (req, res) => {
       .populate({
         path: "assignedEngineers",
         populate:{
-          path: "user"
+          path: "user",
+          select: "-password"
         }
       })
       .exec()

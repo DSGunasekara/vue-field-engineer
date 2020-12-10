@@ -73,6 +73,11 @@
               ><v-icon>mdi-delete</v-icon> Delete</v-btn
             >
           </v-flex>
+          <v-flex xs6 sm4 md1>
+            <v-btn text class="grey--text" @click="viewJob(job._id)"
+            ><v-icon>mdi-eye</v-icon> View</v-btn
+            >
+          </v-flex>
         </v-layout>
         <v-divider></v-divider>
       </v-card>
@@ -96,7 +101,7 @@ export default {
   methods: {
     ...mapActions(["fetchJobs", "deleteJob"]),
     sortBy(prop) {
-      //TODO: srting need to updated
+      //TODO: sorting need to updated
       this.projects = this.projects.sort((a, b) =>
         a[prop] < b[prop] ? -1 : 1
       );
@@ -107,9 +112,10 @@ export default {
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
     },
-    // moment: function () {
-    //   return moment();
-    // }
+    viewJob(jobId){
+      console.log(jobId)
+      this.$router.push(`/job/${jobId}`)
+    }
   },
   computed: {
     ...mapGetters(["allJobs", "getProfile"]),
